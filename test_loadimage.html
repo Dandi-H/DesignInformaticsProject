@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Data Comic
+    </title>
+</head>
+<body>
+    <!-- <form action="index.html" method="get">
+        CO2: <input type="text" id="img_num" name="img_num"><br>
+        <input type="submit" value="Submit">
+    </form> -->
+
+    <input type="number" placeholder="Enter the number" id="img_num" name="img_num" oninput="getValue(img_num);drawImage(img_num)"/>
+    <h1 id="result">Number</h1>
+    <p></p>
+    <img id="CO2" alt="CO2" src="Images/CO2.jpg" style="margin-left:0px;" onload="hideImage()">
+    <p></p>
+    <canvas id="myCanvas" width="1280" height="720"></canvas>
+
+    <script>
+        function hideImage()
+        {
+            document.getElementById("CO2").style.display="none";
+        }
+
+        function getValue(img_num)
+        {
+            var num = img_num.value;
+            document.getElementById('result').innerText = num;
+            // // 获得id为info的input标签的内容
+            // var a = document.getElementById('info').value;
+            // // 显示，在id为result处动态显示（清除旧的显示新的）
+            // document.getElementById('result').innerText = a;
+        }
+
+        function drawImage(img_num)
+        {
+            var num = img_num.value;
+            document.getElementById("img_num").onchange=function()
+            {
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+                ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+                var img = document.getElementById("CO2");
+                for (i=0; i<num; i++)
+                {
+                    // console.log(i);
+                    if (i<10)
+                    {
+                        ctx.drawImage(img, 110*i, 0);
+                    }
+                    else
+                    {
+                        j=parseInt(i/10);
+                        ctx.drawImage(img, 110*(i-10*j), 110*j);
+                    }
+                }
+            }
+        }
+
+        // document.getElementById("img_num").oninput=function()
+        // {
+        //     var c=document.getElementById("myCanvas");
+        //     var ctx=c.getContext("2d");
+        //     var img=document.getElementById("CO2");
+        //     ctx.drawImage(img,0,0);
+        // };
+
+        // document.getElementById("CO2").onload=function()
+        // {
+        //     document.getElementById('result2').innerText = num;
+        //     var c=document.getElementById("myCanvas");
+        //     var ctx=c.getContext("2d");
+        //     var img=document.getElementById("CO2");
+        //     ctx.drawImage(img,0,0);
+        // };
+
+        // ctx.beginPath();
+        // ctx.font = "30px Arial";
+        // ctx.fillText(num, 10, 150);
+
+        // var c = document.getElementById("myCanvas");
+        // var ctx = c.getContext("2d");
+        // ctx.beginPath();
+        // ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+        // ctx.stroke();
+        // //var num="HE";
+        // var num = $("#img_num").val();
+        // ctx.font = "30px Arial";
+        // ctx.fillText(num, 10, 150);
+    </script>
+</body>
+</html>

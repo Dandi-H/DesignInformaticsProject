@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Comic</title>
+</head>
+<body>
+    <p>
+        I walked
+        <input type="number" placeholder="Enter the number" id="input_num" name="input_num" 
+            oninput="calculateKm(input_num);drawCO2Image(input_num);calculateKg(input_num);calculateTrees(input_num);drawTreesImage(input_num)"/>
+        km each day last year.
+    </p>
+    <p>
+        Which equals
+        <font id="kmaYear">0</font>
+        km a year.
+    </p>
+    <p>If I didn't walk at all...</p>
+    <p>
+        That would produce
+        <img id="kgCO2" alt="kgCO2" src="Images/kgCO2.jpg" style="margin-left:0px;" onload="hideCO2Image()">
+        <p></p>
+        <canvas id="myCO2Canvas" width="1400" height="240"></canvas>
+        <p></p>
+        <font id="kgaYear">0</font>
+        kg CO2.
+    </p>
+    <p>
+        Which need
+        <img id="Tree" alt="Tree" src="Images/Tree.jpg" style="margin-left:0px;" onload="hideTreeImage()">
+        <p></p>
+        <canvas id="myTreesCanvas" width="1400" height="520"></canvas>
+        <p></p>
+        <font id="numofTrees">0</font>
+        trees to absorb.
+    </p>
+    <p>Keep walking to protect the earth!</p>
+
+    <script>
+        function hideCO2Image()
+        {
+            document.getElementById("kgCO2").style.display="none";
+        }
+
+        function calculateKm(input_num)
+        {
+            var num = Math.round(input_num.value*365);
+            document.getElementById('kmaYear').innerText = num;
+            // var a = document.getElementById('info').value; // 获得id为info的input标签的内容
+            // document.getElementById('result').innerText = a; // 显示，在id为result处动态显示（清除旧的显示新的）
+        }
+
+        function drawCO2Image(input_num)
+        {
+            var num = Math.round(input_num.value*365/10000*8*2.7);
+            document.getElementById("input_num").onchange //=function()
+            {
+                var c = document.getElementById("myCO2Canvas");
+                var ctx = c.getContext("2d");
+                ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+                var img = document.getElementById("kgCO2");
+                for (i=0; i<num; i++)
+                {
+                    // console.log(i);
+                    if (i<10)
+                    {
+                        ctx.drawImage(img, img.width*i, 0);
+                    }
+                    else
+                    {
+                        j=parseInt(i/10); //保留整数
+                        ctx.drawImage(img, img.width*(i-10*j), img.height*j);
+                    }
+                }
+            }
+        }
+
+        function calculateKg(input_num)
+        {
+            var num = Math.round(input_num.value*365/100*8*2.7); //四舍五入
+            document.getElementById('kgaYear').innerText = num;
+        }
+
+        function hideTreeImage()
+        {
+            document.getElementById("Tree").style.display="none";
+        }
+
+        function drawTreesImage(input_num)
+        {
+            var num = Math.round(input_num.value*365/100*8*2.7/18.3);
+            document.getElementById("input_num").onchange
+            {
+                var c_t = document.getElementById("myTreesCanvas");
+                var ctx_t = c_t.getContext("2d");
+                ctx_t.clearRect(0,0,c_t.width,c_t.height); //Clear Canvas
+                var img_t = document.getElementById("Tree");
+                for (i=0; i<num; i++)
+                {
+                    if (i<15)
+                    {
+                        ctx_t.drawImage(img_t, img_t.width*i, 0);
+                    }
+                    else
+                    {
+                        j=parseInt(i/15); //保留整数
+                        ctx_t.drawImage(img_t, img_t.width*(i-15*j), img_t.height*j);
+                    }
+                }
+            }
+        }
+
+        function calculateTrees(input_num)
+        {
+            var num = Math.round(input_num.value*365/100*8*2.7/18.3); //四舍五入
+            document.getElementById('numofTrees').innerText = num;
+        }
+    </script>
+</body>
+</html>
