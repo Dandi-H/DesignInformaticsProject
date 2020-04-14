@@ -90,7 +90,9 @@
         var g = svg.append("g"),
             features;
 
-        //Add all of the countries to the globe
+        /**
+         * @description: Add all of the countries to the globe
+         */
         d3.json("world-countries.json", function(collection) {
             features = g.selectAll(".feature").data(collection.features);
 
@@ -99,7 +101,10 @@
                 .attr("d", function(d){ return path(circle.clip(d)); });
         });
 
-        //Redraw all items with new projections
+        /**
+         * @description: Redraw all items with new projections
+         * @return: spacePath(d)
+         */
         function redraw(){
             features.attr("d", function(d){
                 return path(circle.clip(d));
@@ -131,6 +136,10 @@
             }
         }
 
+        /**
+         * @description: Create stars
+         * @return: data
+         */
         function createStars(number){
             var data = [];
             for(var i = 0; i < number; i++){
@@ -148,6 +157,11 @@
             return data;
         }
 
+        // 快捷键：Ctrl+Alt+T
+        /**
+         * @description: Create stars randomly
+         * @return: [Math.random() * 360 - 180, Math.random() * 180 - 90]
+         */
         function randomLonLat(){
             return [Math.random() * 360 - 180, Math.random() * 180 - 90];
         }

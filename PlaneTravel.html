@@ -1,66 +1,398 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<head>
-    <title>
-        Data Comic
-    </title>
-</head>
+<html>
+   <head>
+    <title>Plane Travel Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 600px;  /* The height is 400 pixels */
+            width: 100%;  /* The width is the width of the web page */
+        }
+        .floating-panel {
+         position: absolute;
+         top: 10px;
+         left: 25%;
+         z-index: 5;
+         background-color: #fff;
+         padding: 5px;
+         border: 1px solid #999;
+         text-align: center;
+         font-family: 'Roboto','sans-serif';
+         line-height: 30px;
+         padding-left: 10px;
+       }
+       .titlebar{
+            width: 100%;
+            float: left;
+            height: 60px;
+        }
+       .col-left{
+            width: 65%;
+            float: left;
+            height: 600px;
+        }
+        .col-right{
+            width: 33%;
+            margin-left: 2%;
+            float: right;
+            height: 600px;
+        }
+    </style>
+   </head>
+   <body>
+    <div class="titlebar">
+        <h3>My Plane Travel Footprint</h3>
+    </div>
+    <div class="col-left">
+        <!--The div element for the map -->
+        <div id="map"></div>
+    </div>
+    <div class="col-right">
+        <div id="floating-panel">
+            <p>
+                from <input id="from_address" type="textbox" value="">
+                to <input id="to_address" type="textbox" value="">
+                <input id="submit" type="button" value="Add">
+            </p>
+        </div>
+        <p>
+            <font id="from_text"></font><font id="to_text"></font>
+            <p></p>
+            <font id="from_coordinate"></font><font id="to_coordinate"></font>
+            <p></p>
+            <font id="ft_distance"></font>
+            <p></p>
+            <font id="total_distance"></font>
+        </p>
+    </div>
+     <script>
+        var totalDistance;
+        var fromCoordinate;
+        var toCoordinate;
+        initMap();
 
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+        // Initialize and add the map
+        function initMap()
+        {
+            var map_center = {lat: 30, lng: 10};
+            totalDistance = 0;
 
-<!-- Create an element where the map will take place -->
-<svg id="my_dataviz" width="550" height="300"></svg>
+            var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 2,
+                    center: map_center,
+                    mapTypeId: 'roadmap',
+                    styles: [ //Silver Style
+                    {
+                        "featureType": "administrative",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#444444"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "weight": "0.40"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "labels.text",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            },
+                            {
+                                "saturation": "-40"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "color": "#444444" //#333366
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "hue": "#ff0000"
+                            },
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.province",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.locality",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.neighborhood",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.land_parcel",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape.man_made",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape.natural",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "saturation": -100
+                            },
+                            {
+                                "lightness": 45
+                            },
+                            {
+                                "weight": "1.25"
+                            },
+                            {
+                                "visibility": "on"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "simplified"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            },
+                            {
+                                "color": "#dddcdc"
+                            }
+                        ]
+                    }
+                ]
+            });
 
-<script>
+            var geocoder = new google.maps.Geocoder();
+            document.getElementById('submit').addEventListener('click', function()
+            {
+                geocodeAddress(geocoder, map);
+            });
+            //The marker, positioned at Uluru
+            //var marker = new google.maps.Marker({position: uluru, map: map});
+        }
 
-    // The svg
-    var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
+        function geocodeAddress(geocoder, resultsMap)
+        {
+            var from_address = document.getElementById('from_address').value;
+            var to_address = document.getElementById('to_address').value;
 
-    // Map and projection
-    var projection = d3.geoMercator()
-        .scale(85)
-        .translate([width/2, height/2*1.3])
+            geocoder.geocode({'address': from_address}, function(results, status)
+            {
+                if (status === 'OK')
+                {
+                    //resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                    document.getElementById('from_text').innerText = from_address;
+                    fromCoordinate = results[0].geometry.location;
+                }
+                else
+                {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
 
-    // Create data: coordinates of start and end
-    var link = [
-      {type: "LineString", coordinates: [[100, 60], [-60, -30]]},
-      {type: "LineString", coordinates: [[20, 20], [60, 30]]},
-      {type: "LineString", coordinates: [[10, -20], [130, -30]]}
-    ]
+            geocoder.geocode({'address': to_address}, function(results, status)
+            {
+                if (status === 'OK')
+                {
+                    //resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                    document.getElementById('to_text').innerText = " to "+to_address;
+                    toCoordinate = results[0].geometry.location;
 
-    // A path generator
-    var path = d3.geoPath()
-        .projection(projection)
+                    Connect(fromCoordinate, toCoordinate);
+                }
+                else
+                {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
 
-    // Load world shape
-    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson", function(data){
+            // setTimeout( function(){xxx}, 100 );
 
-        // Draw the map
-        svg.append("g")
-            .selectAll("path")
-            .data(data.features)
-            .enter().append("path")
-                .attr("fill", "#b8b8b8")
-                .attr("d", d3.geoPath()
-                    .projection(projection)
-                )
-                .style("stroke", "#fff")
-                .style("stroke-width", 0)
+            function Connect(from, to)
+            {
+                //document.getElementById('from_coordinate').innerText = from;
+                //document.getElementById('to_coordinate').innerText = to;
 
-        // Add the path
-        svg.selectAll("myPath")
-          .data(link)
-          .enter()
-          .append("path")
-            .attr("d", function(d){ return path(d)})
-            .style("fill", "none")
-            .style("stroke", "orange")
-            .style("stroke-width", 2)
-    })
+                var flightPlanCoordinates = [
+                    {lat: from.lat(), lng: from.lng()},
+                    {lat: to.lat(), lng: to.lng()}
+                    // {lat: 39.904, lng: 116.407},
+                    // {lat: 51.507, lng: -0.128}
+                ];
+                var flightPath = new google.maps.Polyline({
+                    path: flightPlanCoordinates,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+                flightPath.setMap(resultsMap);
 
-</script>
+                totalDistance = Number(Distance(from.lat(), from.lng(), to.lat(), to.lng())) + totalDistance;
+                document.getElementById('ft_distance').innerText = "Distance: "+Distance(from.lat(), from.lng(), to.lat(), to.lng())+"km";
+                document.getElementById('total_distance').innerText = "Total Distance: "+totalDistance+"km";
+                //console.log(typeof map);
+            }
+
+            function GetRad(d)
+            {
+                var PI = Math.PI;
+                return d*PI/180.0;
+            }
+
+            function Distance(lat1, lng1, lat2, lng2)
+            {
+                var f = GetRad((lat1 + lat2)/2);
+                var g = GetRad((lat1 - lat2)/2);
+                var l = GetRad((lng1 - lng2)/2);
+                var sg = Math.sin(g);
+                var sl = Math.sin(l);
+                var sf = Math.sin(f);
+                var s,c,w,r,d,h1,h2;
+                var a = 6378137.0; //The Radius of eath in meter.
+                var fl = 1/298.257;
+                sg = sg*sg;
+                sl = sl*sl;
+                sf = sf*sf;
+                s = sg*(1-sl) + (1-sf)*sl;
+                c = (1-sg)*(1-sl) + sf*sl;
+                w = Math.atan(Math.sqrt(s/c));
+                r = Math.sqrt(s*c)/w;
+                d = 2*w*a;
+                h1 = (3*r -1)/2/c;
+                h2 = (3*r +1)/2/s;
+                s = d*(1 + fl*(h1*sf*(1-sg) - h2*(1-sf)*sg));
+                s = s/1000;
+                s = s.toFixed(2); //指定小数点后的位数。
+                return s;
+            }
+        }
+
+     </script>
+     <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5_OYhnXfjVakPuA44gussUU19XrdWGFc&callback=initMap">
+     </script>
+  </body>
+</html>
