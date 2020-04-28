@@ -1,398 +1,884 @@
 <!DOCTYPE html>
-<html>
-   <head>
-    <title>Plane Travel Map</title>
+<html style="height: 300%">
+  <head>
+    <title>My Plane Travel Footprint</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <script src="jquery-3.5.0.js"></script>
+    <script src="echarts.js"></script>
+
     <style>
-        /* Set the size of the div element that contains the map */
-        #map {
-            height: 600px;  /* The height is 400 pixels */
-            width: 100%;  /* The width is the width of the web page */
-        }
-        .floating-panel {
-         position: absolute;
-         top: 10px;
-         left: 25%;
-         z-index: 5;
-         background-color: #fff;
-         padding: 5px;
-         border: 1px solid #999;
-         text-align: center;
-         font-family: 'Roboto','sans-serif';
-         line-height: 30px;
-         padding-left: 10px;
-       }
-       .titlebar{
-            width: 100%;
-            float: left;
-            height: 60px;
-        }
-       .col-left{
-            width: 65%;
-            float: left;
-            height: 600px;
-        }
-        .col-right{
-            width: 33%;
-            margin-left: 2%;
-            float: right;
-            height: 600px;
-        }
+      /* Set the size of the div element that contains the map */
+      #map {
+        height: 100%;  /* The height is 580 pixels */
+        width: 100%;  /* The width is the width of the web page */
+      }
+      .floating-panel{
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      .titlebar{
+        width: 97.5%;
+        margin-left: 2.5%;
+        float: left;
+        height: 60px;
+        font-family: "Comic Sans MS";
+      }
+      .col1{
+        width: 100%;
+        height: 570px;
+        float: left;
+        font-family: "Comic Sans MS";
+        overflow: auto;
+      }
+      .col1-left{
+        width: 65%;
+        float: left;
+        height: 100%;
+      }
+      .col1-right{
+        width: 33%;
+        margin-left: 2%;
+        float: right;
+        height: 100%;
+      }
+      .col2{
+        width: 97.5%;
+        margin-left: 2.5%;
+        float: left;
+        height: 100%;
+        font-family: "Comic Sans MS";
+        overflow: auto;
+      }
+      .col-comic{
+        display: inline-block;
+        width: 95%;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+        height: 67%;
+        margin-top: 0.5%;
+        font-family: "Comic Sans MS";
+        overflow: auto;
+        border-top: silver dotted 1.5px;
+      }
+
+      .title {
+        background-color: #cccccc;
+        border-bottom: orange solid 1px;
+        font-family: "Comic Sans MS";
+      }
+      .title li {
+        display: inline-block;
+        padding: 10px;
+      }
+      .title .activate {
+        color: white;
+        background-color: orange;
+      }
+      .hide {
+        display: none;
+      }
+      .content{
+        position: relative;
+      }
     </style>
-   </head>
-   <body>
-    <div class="titlebar">
+  </head>
+  <script>
+    function hideImage(imgId)
+    {
+      document.getElementById(imgId).style.display="none";
+      //document.getElementById("flight").style.display="none";
+    }
+  </script>
+  <body style="height: 100%">
+    <div  style="height: 33%">
+      <div class="titlebar">
         <h3>My Plane Travel Footprint</h3>
-    </div>
-    <div class="col-left">
-        <!--The div element for the map -->
-        <div id="map"></div>
-    </div>
-    <div class="col-right">
-        <div id="floating-panel">
-            <p>
-                from <input id="from_address" type="textbox" value="">
-                to <input id="to_address" type="textbox" value="">
-                <input id="submit" type="button" value="Add">
-            </p>
+      </div>
+      <ul class="title">
+        <li class="activate" relate="1">Map</li>
+        <li relate="2">Brief</li>
+      </ul>
+      <div class="content">
+        <div id="1">
+          <div class="col1">
+            <div class="col1-left">
+              <!--The div element for the map -->
+              <div id="map"></div>
+            </div>
+            <div class="col1-right">
+              <div id="floating-panel">
+                <p>
+                  <font style="font-size:16px">from </font>
+                  <input id="from_address" type="textbox" value=""
+                    style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
+                  <font style="font-size:16px"> to </font>
+                  <input id="to_address" type="textbox" value=""
+                    style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
+                  <input id="submit" type="button" style="font-size:15px; font-family:Comic Sans MS" value="Add">
+                </p>
+              </div>
+              <p style="font-size:15px">
+                <p id="ft_text" style="color:grey"></p>
+                <p id="ft_distance"></p>
+                <p id="total_distance_1"></p>
+                <p id="total_CO2_1"></p>
+              </p>
+              <!-- <a href="#jump" style="right: 5px; bottom: 5px; position: fixed">Jump to Comic</a> -->
+              <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
+                <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:rgba(158, 185, 116, 0.829)">Jump to Comic</button>
+              </a>
+            </div>
+          </div>
         </div>
-        <p>
-            <font id="from_text"></font><font id="to_text"></font>
+        <div class="hide" id="2">
+          <div class="col2">
+            <font style="font-size:16px">Long-haul: </font>
+            <input type="number" placeholder="" id="input_l" name="input_l"
+                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+                oninput="CalculateHaul(); drawFlightImage()"/>
+            <button title="over 6 hours in duration" style="font-size:12px; color:grey">?</button> <!-- font-weight: bold -->
             <p></p>
-            <font id="from_coordinate"></font><font id="to_coordinate"></font>
+            <font style="font-size:16px">Medium-haul: </font>
+            <input type="number" placeholder="" id="input_m" name="input_m"
+                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+                oninput="CalculateHaul(); drawFlightImage()"/>
+            <button title="3-6 hours in duration" style="font-size:12px; color:grey">?</button>
             <p></p>
-            <font id="ft_distance"></font>
-            <p></p>
-            <font id="total_distance"></font>
-        </p>
+            <font style="font-size:16px">Short-haul: </font>
+            <input type="number" placeholder="" id="input_s" name="input_s"
+                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+                oninput="CalculateHaul(); drawFlightImage()"/>
+            <button title="up to 3 hours in duration" style="font-size:12px; color:grey">?</button>
+            <p id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS"></p>
+            <p id="total_CO2_2" style="font-size:15px; font-family:Comic Sans MS"></p>
+            <img id="flight" alt="flight" src="Images/Flight.jpg" style="margin-left:0px;" onload="hideImage(id)">
+            <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px;" onload="hideImage(id)">
+            <canvas id="flightCanvas" width="1320" height="360"></canvas>
+            <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
+              <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:rgba(158, 185, 116, 0.829)">Jump to Comic</button>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-     <script>
-        var totalDistance;
-        var fromCoordinate;
-        var toCoordinate;
-        initMap();
+    <div class="col-comic" style="font-size:17px">
+      <p id="jump">
+        <font>Last year, I traveled</font>
+          <font id="timesaYear">0</font>
+          <font>times, a total of</font>
+          <font id="kmaYear">0</font>
+          <font>km by plane.</font>
+      </p>
+      <p>
+        <font >Which produced</font>
+          <font id="tonsCO2">0</font>
+          <font>tons of CO2.</font>
+        <img id="tCO2" src="Images/1tCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
+        <img id="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
+        <canvas id="CO2Canvas" width="1320" height="120"></canvas>
+      </p>
+      <p>
+        <font>That would be</font>
+          <font id="average">0</font>
+          <font>times of the average.</font>
+          <div id="chartContainer" style="width: 1000px; height: 300px"></div>
+      </p>
+      <p>Now we've already produced more CO2 than the earth can absorb.</p>
+        <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px;">
+      <p>If everyone produce that much CO2 like I did,</p>
+      <p>
+        <font>That would need</font>
+          <font id="numofTrees">0</font>
+          <font>trees to absorb,</font>
+        <img id="bTrees" src="Images/100bTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
+        <img id="tTrees" src="Images/1tTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
+        <canvas id="treesCanvas" width="1320" height="240"></canvas>
+      </p>
+      <p>
+        <font>which equals to</font>
+          <font id="numofEarths">0</font>
+          <font>earths.</font>
+        <img id="earth" src="Images/Earth.jpg" style="margin-left:0px;" onload="hideImage(id)">
+        <canvas id="earthCanvas" width="1320" height="120"></canvas>
+      </p>
+    </div>
 
-        // Initialize and add the map
-        function initMap()
+    <script>
+      var totalDistance1 = 0;
+      var totalDistance2 = 0;
+      var totalDistance = 0;
+      var totalTimes1 = 0;
+      var totalTimes2 = 0;
+      var totalTimes = 0;
+      var totalCO2_1 = 0;
+      var totalCO2_2 = 0;
+      var totalCO2 = 0;
+      Comic(1);
+
+      //点击title内的标题，this增加activate，其余去除activate
+      //取得this的索引，根据索引取出content中对应的页面，去除hide, 其余页面加hide
+      //jq事件委派
+      $(".title").on("click", "li", function () //记住，子元素没有$
+      {
+        $(this).addClass("activate");
+        $(this).siblings().removeClass("activate");
+        var $index = $(this).index();
+        $(".content div").eq($index).removeClass("hide").siblings().addClass("hide");
+      });
+      //jq事件绑定实现
+      $("li").click(function()
+      {
+        $(this).addClass("activate");
+        $(this).siblings().removeClass("activate");
+        var $index = $(this).index();
+        $(".content div").eq($index).removeClass("hide").siblings().addClass("hide");
+      });
+
+      //JS 实现
+      var tabs = document.getElementsByClassName("title")[0].children;
+      var pages = document.getElementsByClassName("content")[0].children;
+
+      for (var i=0; i<tabs.length; i++)
+      {
+        //为每个标题都绑定函数
+        tabs[i].onclick = function()
         {
-            var map_center = {lat: 30, lng: 10};
-            totalDistance = 0;
+          //每次执行函数都要遍历所有标题，判断为当前点击标题，增加"activate"，否则移除"activate"
+          for(var j=0; j<tabs.length; j++)
+          {
+              if (tabs[j]==this)
+              {
+                tabs[j].classList.add("activate");
+                relateId = this.getAttribute("relate"); //当前点击元素relate属性对应的id值
+                //console.log(relateId);
+                Comic(relateId);
+              }
+              else
+              {
+                tabs[j].classList.remove("activate")
+              }
+          }
 
-            var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 2,
-                    center: map_center,
-                    mapTypeId: 'roadmap',
-                    styles: [ //Silver Style
-                    {
-                        "featureType": "administrative",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "color": "#444444"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                            {
-                                "weight": "0.40"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "labels.text",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "saturation": "-40"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "color": "#444444" //#333366
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "labels.text.stroke",
-                        "stylers": [
-                            {
-                                "hue": "#ff0000"
-                            },
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.province",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.locality",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.neighborhood",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.land_parcel",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "landscape",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "color": "#ffffff"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "landscape.man_made",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "landscape.natural",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "saturation": -100
-                            },
-                            {
-                                "lightness": 45
-                            },
-                            {
-                                "weight": "1.25"
-                            },
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.highway",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "simplified"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.arterial",
-                        "elementType": "labels.icon",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "transit",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "color": "#dddcdc"
-                            }
-                        ]
-                    }
-                ]
-            });
-
-            var geocoder = new google.maps.Geocoder();
-            document.getElementById('submit').addEventListener('click', function()
+          //根据自定义的relate属性，将标题和页面关联起来
+          var relateId = this.getAttribute("relate");
+          //console.log(relateId);
+          //当前激活标签relate属性对应的id，通过它，找到对应的显示页面
+          var current_page = document.getElementById(relateId);
+          for (var k=0; k<pages.length; k++)
+          {
+            if (pages[k] == current_page)
             {
-                geocodeAddress(geocoder, map);
+              pages[k].classList.remove("hide");
+            }
+            else
+            {
+              pages[k].classList.add("hide");
+            }
+          }
+        };
+      }
+
+      var fromCoordinate;
+      var toCoordinate;
+      var addText = "";
+      initMap();
+
+      // Initialize and add the map
+      function initMap()
+      {
+        var map_center = {lat: 30, lng: 10};
+        totalDistance1 = 0;
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: map_center,
+          mapTypeId: 'roadmap',
+          styles: [ //Silver Style
+            {
+              "featureType": "administrative",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#444444"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.country",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.country",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "weight": "0.40"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.country",
+              "elementType": "labels.text",
+              "stylers": [
+                {
+                  "visibility": "on"
+                },
+                {
+                  "saturation": "-40"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.country",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#444444" //#333366
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.country",
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "hue": "#ff0000"
+                },
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.province",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.locality",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.neighborhood",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "landscape",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "color": "#ffffff"
+                }
+              ]
+            },
+            {
+              "featureType": "landscape.man_made",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "landscape.natural",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "saturation": -100
+                },
+                {
+                  "lightness": 45
+                },
+                {
+                  "weight": "1.25"
+                },
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "simplified"
+                }
+              ]
+            },
+            {
+              "featureType": "road.arterial",
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "transit",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "on"
+                },
+                {
+                  "color": "#dddcdc"
+                }
+              ]
+            }
+          ]
+        });
+
+        var geocoder = new google.maps.Geocoder();
+        document.getElementById('submit').addEventListener('click', function()
+        {
+            geocodeAddress(geocoder, map);
+        });
+        //The marker, positioned at Uluru
+        //var marker = new google.maps.Marker({position: uluru, map: map});
+      }
+
+      function geocodeAddress(geocoder, resultsMap)
+      {
+        var from_address = document.getElementById('from_address').value;
+        var to_address = document.getElementById('to_address').value;
+
+        geocoder.geocode({'address': from_address}, function(results, status)
+        {
+          if (status === 'OK')
+          {
+            //resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
             });
-            //The marker, positioned at Uluru
-            //var marker = new google.maps.Marker({position: uluru, map: map});
+            //document.getElementById('from_text').innerText = from_address;
+            fromCoordinate = results[0].geometry.location;
+          }
+          else
+          {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+
+        geocoder.geocode({'address': to_address}, function(results, status)
+        {
+          if (status === 'OK')
+          {
+            //resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location
+            });
+            //document.getElementById('to_text').innerText = " to "+to_address;
+            toCoordinate = results[0].geometry.location;
+
+            Connect(fromCoordinate, toCoordinate);
+          }
+          else
+          {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+
+        // setTimeout( function(){xxx}, 100 );
+
+        function Connect(from, to)
+        {
+          var flightPlanCoordinates = [
+            {lat: from.lat(), lng: from.lng()},
+            {lat: to.lat(), lng: to.lng()}
+            // {lat: 39.904, lng: 116.407},
+            // {lat: 51.507, lng: -0.128}
+          ];
+          var flightPath = new google.maps.Polyline({
+            path: flightPlanCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          });
+          flightPath.setMap(resultsMap);
+
+          thisDistance = Number(Distance(from.lat(), from.lng(), to.lat(), to.lng()));
+          totalTimes1 = totalTimes1+1;
+          totalDistance1 = thisDistance + totalDistance1;
+          document.getElementById('ft_distance').innerText = "Distance: "+Distance(from.lat(), from.lng(), to.lat(), to.lng())+"km";
+          document.getElementById('total_distance_1').innerText = "Total Distance: "+totalDistance1+"km";
+          //console.log(typeof map);
+
+          AddCO2(thisDistance);
+          document.getElementById('total_CO2_1').innerText = "Total CO2: "+totalCO2_1+"kg";
+
+          //document.getElementById('ft_text').innerText = from_address+" to "+to_address;
+          AddText(from_address, to_address);
         }
 
-        function geocodeAddress(geocoder, resultsMap)
+        function AddText(from, to)
         {
-            var from_address = document.getElementById('from_address').value;
-            var to_address = document.getElementById('to_address').value;
-
-            geocoder.geocode({'address': from_address}, function(results, status)
-            {
-                if (status === 'OK')
-                {
-                    //resultsMap.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location
-                    });
-                    document.getElementById('from_text').innerText = from_address;
-                    fromCoordinate = results[0].geometry.location;
-                }
-                else
-                {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-
-            geocoder.geocode({'address': to_address}, function(results, status)
-            {
-                if (status === 'OK')
-                {
-                    //resultsMap.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location
-                    });
-                    document.getElementById('to_text').innerText = " to "+to_address;
-                    toCoordinate = results[0].geometry.location;
-
-                    Connect(fromCoordinate, toCoordinate);
-                }
-                else
-                {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-
-            // setTimeout( function(){xxx}, 100 );
-
-            function Connect(from, to)
-            {
-                //document.getElementById('from_coordinate').innerText = from;
-                //document.getElementById('to_coordinate').innerText = to;
-
-                var flightPlanCoordinates = [
-                    {lat: from.lat(), lng: from.lng()},
-                    {lat: to.lat(), lng: to.lng()}
-                    // {lat: 39.904, lng: 116.407},
-                    // {lat: 51.507, lng: -0.128}
-                ];
-                var flightPath = new google.maps.Polyline({
-                    path: flightPlanCoordinates,
-                    geodesic: true,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 1.0,
-                    strokeWeight: 2
-                });
-                flightPath.setMap(resultsMap);
-
-                totalDistance = Number(Distance(from.lat(), from.lng(), to.lat(), to.lng())) + totalDistance;
-                document.getElementById('ft_distance').innerText = "Distance: "+Distance(from.lat(), from.lng(), to.lat(), to.lng())+"km";
-                document.getElementById('total_distance').innerText = "Total Distance: "+totalDistance+"km";
-                //console.log(typeof map);
-            }
-
-            function GetRad(d)
-            {
-                var PI = Math.PI;
-                return d*PI/180.0;
-            }
-
-            function Distance(lat1, lng1, lat2, lng2)
-            {
-                var f = GetRad((lat1 + lat2)/2);
-                var g = GetRad((lat1 - lat2)/2);
-                var l = GetRad((lng1 - lng2)/2);
-                var sg = Math.sin(g);
-                var sl = Math.sin(l);
-                var sf = Math.sin(f);
-                var s,c,w,r,d,h1,h2;
-                var a = 6378137.0; //The Radius of eath in meter.
-                var fl = 1/298.257;
-                sg = sg*sg;
-                sl = sl*sl;
-                sf = sf*sf;
-                s = sg*(1-sl) + (1-sf)*sl;
-                c = (1-sg)*(1-sl) + sf*sl;
-                w = Math.atan(Math.sqrt(s/c));
-                r = Math.sqrt(s*c)/w;
-                d = 2*w*a;
-                h1 = (3*r -1)/2/c;
-                h2 = (3*r +1)/2/s;
-                s = d*(1 + fl*(h1*sf*(1-sg) - h2*(1-sf)*sg));
-                s = s/1000;
-                s = s.toFixed(2); //指定小数点后的位数。
-                return s;
-            }
+          addText += from+" to "+to+"<br>"; //因为是HTML代码，这里应使用<br>，不使用\n
+          document.getElementById("ft_text").innerHTML = addText;
         }
 
-     </script>
-     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5_OYhnXfjVakPuA44gussUU19XrdWGFc&callback=initMap">
-     </script>
+        function AddCO2(distance)
+        {
+          var thisCO2;
+          if (distance<200)
+            thisCO2 = 0.275*distance;
+          else if (distance<=1000)
+            thisCO2 = 55+0.105*(distance-200);
+          else
+            thisCO2 = 0.139*distance;
+          totalCO2_1 = Math.round(totalCO2_1 + thisCO2);
+          Comic(1);
+        }
+
+        function GetRad(d)
+        {
+          var PI = Math.PI;
+          return d*PI/180.0;
+        }
+
+        function Distance(lat1, lng1, lat2, lng2)
+        {
+          var f = GetRad((lat1 + lat2)/2);
+          var g = GetRad((lat1 - lat2)/2);
+          var l = GetRad((lng1 - lng2)/2);
+          var sg = Math.sin(g);
+          var sl = Math.sin(l);
+          var sf = Math.sin(f);
+          var s,c,w,r,d,h1,h2;
+          var a = 6378137.0; //The Radius of eath in meter.
+          var fl = 1/298.257;
+          sg = sg*sg;
+          sl = sl*sl;
+          sf = sf*sf;
+          s = sg*(1-sl) + (1-sf)*sl;
+          c = (1-sg)*(1-sl) + sf*sl;
+          w = Math.atan(Math.sqrt(s/c));
+          r = Math.sqrt(s*c)/w;
+          d = 2*w*a;
+          h1 = (3*r -1)/2/c;
+          h2 = (3*r +1)/2/s;
+          s = d*(1 + fl*(h1*sf*(1-sg) - h2*(1-sf)*sg));
+          s = s/1000;
+          s = Math.round(s);
+          //s = s.toFixed(2); //指定小数点后的位数
+          return s;
+        }
+      }
+
+      function CalculateHaul()
+      {
+        var numL = document.getElementById("input_l").value;
+        var numM = document.getElementById("input_m").value;
+        var numS = document.getElementById("input_s").value;
+        totalTimes2 = 1*numL + 1*numM + 1*numS;
+        totalDistance2 = 7118*numL + 2759*numM + 783*numS;
+        totalCO2_2 = Math.round(7118*0.139*numL + 2759*0.139*numM + (55+0.105*583)*numS);
+        document.getElementById("total_distance_2").innerText = "Total Distance: "+totalDistance2+"km";
+        document.getElementById("total_CO2_2").innerText = "Total CO2: "+totalCO2_2+"kg";
+        Comic(2);
+      }
+
+      function Comic(id)
+      {
+        if (id == 1)
+        {
+          totalTimes = totalTimes1;
+          totalDistance = totalDistance1;
+          totalCO2 = totalCO2_1;
+        }
+        else if (id == 2)
+        {
+          totalTimes = totalTimes2;
+          totalDistance = totalDistance2;
+          totalCO2 = totalCO2_2;
+        }
+        document.getElementById("timesaYear").innerText = totalTimes;
+        document.getElementById("kmaYear").innerText = totalDistance;
+        document.getElementById("tonsCO2").innerText = (totalCO2/1000).toFixed(2); //指定小数点后的位数
+        drawChart();
+        drawCO2Image();
+        drawTreesImage();
+        drawEarthImage();
+      }
+
+      //绘制柱状图
+      function drawChart()
+      {
+        document.getElementById("average").innerText = Math.round(totalCO2/100);
+        var dom = document.getElementById("chartContainer");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        option = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { //坐标轴指示器，坐标轴触发有效
+              type: 'shadow' //默认为直线，可选为：'line' | 'shadow'
+            }
+          },
+          legend: {
+            data: ['Flights', 'Others']
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value'
+          },
+          yAxis: {
+            type: 'category',
+            data: ['Worldwide', 'Europe', 'Me']
+          },
+          series: [
+            {
+              name: 'Flights',
+              type: 'bar',
+              stack: '总量',
+              label: {
+                show: true,
+                position: 'insideRight'
+              },
+              data: [0.1, 0.4, (totalCO2/1000).toFixed(1)]
+            },
+            {
+              name: 'Others',
+              type: 'bar',
+              stack: '总量',
+              label: {
+                show: true,
+                position: 'insideRight'
+              },
+              data: [4.8, 6.6]
+            },
+          ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+      }
+
+      //绘制各种图
+      function drawFlightImage()
+      {
+        document.getElementById("input_l"||"input_m"||"input_s").onchange
+        {
+          var c = document.getElementById("flightCanvas");
+          var ctx = c.getContext("2d");
+          ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+          var img = document.getElementById("flight");
+          for (i=0; i<totalTimes2; i++)
+          {
+            //console.log(i);
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              j=parseInt(i/10); //保留整数
+              if (j<=2)
+              {
+                ctx.drawImage(img, img.width*(i-10*j), img.height*j);
+              }
+              else
+              {
+                var imgEllipsis = document.getElementById("ellipsis");
+                ctx.drawImage(imgEllipsis, img.width*10, img.height*2);
+                i = totalTimes2;
+              }
+            }
+          }
+        }
+      }
+
+      function drawCO2Image()
+      {
+        var num = Math.round(totalCO2/100);
+        var c = document.getElementById("CO2Canvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        if (num >= 7)
+        {
+          num = Math.round(num/10);
+          var img = document.getElementById("tCO2");
+          for (i=0; i<num; i++)
+          {
+            //console.log(i);
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              var imgEllipsis = document.getElementById("ellipsis");
+              ctx.drawImage(imgEllipsis, img.width*10, 0);
+              i = num;
+            }
+          }
+        }
+        else
+        {
+          var img = document.getElementById("kgCO2");
+          var num = Math.round(totalCO2/100);
+          for (i=0; i<num; i++)
+          {
+            ctx.drawImage(img, img.width*i, 0);
+          }
+        }
+        //alert("Error input");
+      }
+
+      function drawTreesImage()
+      {
+        var num = totalCO2*78/1000/18.3;
+        var c = document.getElementById("treesCanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        if (num > 20)
+        {
+          var img = document.getElementById("tTrees");
+          num = num/10;
+          for (i=0; i<Math.round(num); i++)
+          {
+            if (i<5)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              j=parseInt(i/5); //保留整数
+              if (j<=1)
+              {
+                ctx.drawImage(img, img.width*(i-5*j), img.height*j);
+              }
+              else
+              {
+                var imgEllipsis = document.getElementById("ellipsis");
+                ctx.drawImage(imgEllipsis, imgEllipsis.width*10, img.height*1);
+                i = Math.round(num);
+              }
+            }
+          }
+          document.getElementById("numofTrees").innerText = num.toFixed(2)+" trillion";
+        }
+        else
+        {
+          var img = document.getElementById("bTrees");
+          for (i=0; i<Math.round(num); i++)
+          {
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              j=parseInt(i/10); //保留整数
+              ctx.drawImage(img, img.width*(i-10*j), img.height*j);
+            }
+          }
+          document.getElementById("numofTrees").innerText = Math.round(100*num)+" billion";
+        }
+      }
+
+      function drawEarthImage()
+      {
+        var num = totalCO2/1000*78/183;
+        document.getElementById("numofEarths").innerText = (num).toFixed(1);
+        var c = document.getElementById("earthCanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        var img = document.getElementById("earth");
+        for (i=0; i<num; i++)
+        {
+          if (i<10)
+          {
+            ctx.drawImage(img, img.width*i, 0);
+          }
+          else
+          {
+            var imgEllipsis = document.getElementById("ellipsis");
+            ctx.drawImage(imgEllipsis, img.width*10, 0);
+            i = num;
+          }
+        }
+      }
+    </script>
+
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5_OYhnXfjVakPuA44gussUU19XrdWGFc&callback=initMap">
+    </script>
   </body>
 </html>

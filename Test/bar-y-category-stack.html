@@ -1,0 +1,74 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-28 00:36:38
+ * @LastEditTime: 2020-04-28 01:00:18
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \DIP\Test\bar-y-category-stack.html
+ -->
+<!DOCTYPE html>
+<html style="height: 100%">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body style="height: 100%; margin: 0">
+    <div id="chartContainer" style="width: 600px; height: 300px"></div>
+    <script src="echarts.js"></script>
+    <script type="text/javascript">
+      var dom = document.getElementById("chartContainer");
+      var myChart = echarts.init(dom);
+      var app = {};
+      var num = 10;
+      option = null;
+      option = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { //坐标轴指示器，坐标轴触发有效
+            type: 'shadow' //默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        legend: {
+          data: ['Flights', 'Others']
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value'
+        },
+        yAxis: {
+          type: 'category',
+          data: ['Worldwide', 'Europe', 'Me']
+        },
+        series: [
+          {
+            name: 'Flights',
+            type: 'bar',
+            stack: '总量',
+            label: {
+              show: true,
+              position: 'insideRight'
+            },
+            data: [10, 20, num]
+          },
+          {
+            name: 'Others',
+            type: 'bar',
+            stack: '总量',
+            label: {
+              show: true,
+              position: 'insideRight'
+            },
+            data: [90, 120]
+          },
+        ]
+      };;
+      if (option && typeof option === "object") {
+          myChart.setOption(option, true);
+      }
+    </script>
+  </body>
+</html>
