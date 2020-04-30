@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="height: 300%">
+<html style="height: 200%">
   <head>
     <title>My Plane Travel Footprint</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -35,7 +35,7 @@
       }
       .col1{
         width: 100%;
-        height: 570px;
+        height: 560px;
         float: left;
         font-family: "Comic Sans MS";
         overflow: auto;
@@ -64,7 +64,7 @@
         width: 95%;
         margin-left: 2.5%;
         margin-right: 2.5%;
-        height: 67%;
+        height: 50%;
         margin-top: 0.5%;
         font-family: "Comic Sans MS";
         overflow: auto;
@@ -73,7 +73,7 @@
 
       .title {
         background-color: #cccccc;
-        border-bottom: orange solid 1px;
+        border-bottom: #F5AC90 solid 1.5px; /*orange*/
         font-family: "Comic Sans MS";
       }
       .title li {
@@ -82,7 +82,7 @@
       }
       .title .activate {
         color: white;
-        background-color: orange;
+        background-color: #F5AC90;
       }
       .hide {
         display: none;
@@ -100,7 +100,7 @@
     }
   </script>
   <body style="height: 100%">
-    <div  style="height: 33%">
+    <div  style="height: 50%">
       <div class="titlebar">
         <h3>My Plane Travel Footprint</h3>
       </div>
@@ -118,6 +118,7 @@
             <div class="col1-right">
               <div id="floating-panel">
                 <p>
+                  <p>Last year, I flied</p>
                   <font style="font-size:16px">from </font>
                   <input id="from_address" type="textbox" value=""
                     style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
@@ -128,20 +129,21 @@
                 </p>
               </div>
               <p style="font-size:15px">
-                <p id="ft_text" style="color:grey"></p>
-                <p id="ft_distance"></p>
-                <p id="total_distance_1"></p>
-                <p id="total_CO2_1"></p>
+                <p id="ft_text" style="color:silver"></p>
+                <p id="ft_distance" style="color: #EEA082"></p> <!--#F5AC90-->
+                <p id="total_distance_1" style="color: #EEA082"></p>
+                <!-- <p id="total_CO2_1"></p> -->
               </p>
               <!-- <a href="#jump" style="right: 5px; bottom: 5px; position: fixed">Jump to Comic</a> -->
               <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
-                <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:rgba(158, 185, 116, 0.829)">Jump to Comic</button>
+                <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button>
               </a>
             </div>
           </div>
         </div>
         <div class="hide" id="2">
           <div class="col2">
+            <p>Last year, I flied</p>
             <font style="font-size:16px">Long-haul: </font>
             <input type="number" placeholder="" id="input_l" name="input_l"
                 style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
@@ -159,13 +161,13 @@
                 style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
                 oninput="CalculateHaul(); drawFlightImage()"/>
             <button title="up to 3 hours in duration" style="font-size:12px; color:grey">?</button>
-            <p id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS"></p>
-            <p id="total_CO2_2" style="font-size:15px; font-family:Comic Sans MS"></p>
+            <p id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS; color: #EEA082"></p>
+            <!-- <p id="total_CO2_2" style="font-size:15px; font-family:Comic Sans MS"></p> -->
             <img id="flight" alt="flight" src="Images/Flight.jpg" style="margin-left:0px;" onload="hideImage(id)">
             <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px;" onload="hideImage(id)">
             <canvas id="flightCanvas" width="1320" height="360"></canvas>
             <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
-              <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:rgba(158, 185, 116, 0.829)">Jump to Comic</button>
+              <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button> <!-- rgba(158, 185, 116, 0.829) -->
             </a>
           </div>
         </div>
@@ -173,44 +175,62 @@
     </div>
     <div class="col-comic" style="font-size:17px">
       <p id="jump">
-        <font>Last year, I traveled</font>
-          <font id="timesaYear">0</font>
+        <font>Last year, I travelled</font>
+          <font id="timesaYear" style="color: #EEA082">0</font>
           <font>times, a total of</font>
-          <font id="kmaYear">0</font>
-          <font>km by plane.</font>
+          <font id="kmaYear" style="color: #EEA082">0</font>
+          <font>km by plane</font>
       </p>
       <p>
-        <font >Which produced</font>
-          <font id="tonsCO2">0</font>
-          <font>tons of CO2.</font>
+        <font>That's about</font>
+          <font id="timesofGlobe" style="color: #EEA082">0</font>
+          <font>times around the globe</font>
+        <canvas id="globeCanvas" width="1320" height="120"></canvas>
+      </p>
+      <p>
+        <font>Which produced</font>
+          <font id="tonsCO2" style="color: #EEA082">0</font>
+          <font>tons of CO2</font>
         <img id="tCO2" src="Images/1tCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
         <img id="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
         <canvas id="CO2Canvas" width="1320" height="120"></canvas>
       </p>
       <p>
         <font>That would be</font>
-          <font id="average">0</font>
-          <font>times of the average.</font>
+          <font id="average" style="color: #EEA082">0</font>
+          <font>times the average</font>
           <div id="chartContainer" style="width: 1000px; height: 300px"></div>
       </p>
-      <p>Now we've already produced more CO2 than the earth can absorb.</p>
+      <p>Now we've already produced more CO2 than the earth can absorb</p>
         <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px;">
-      <p>If everyone produce that much CO2 like I did,</p>
+        <p>And <font style="color: #EEA082">5.5</font> trees are needed to absorb 100kg CO2</p>
+        <img id="equals" src="Images/Equals.jpg" style="margin-left:0px;">
+      <p>If everyone produces as much CO2 on their travels as I did</p>
       <p>
         <font>That would need</font>
-          <font id="numofTrees">0</font>
-          <font>trees to absorb,</font>
+          <font id="numofTrees" style="color: #EEA082">0</font>
+          <font>trees to absorb</font>
         <img id="bTrees" src="Images/100bTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
         <img id="tTrees" src="Images/1tTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
-        <canvas id="treesCanvas" width="1320" height="240"></canvas>
+        <canvas id="treesCanvas" width="1320" height="290"></canvas>
       </p>
       <p>
-        <font>which equals to</font>
-          <font id="numofEarths">0</font>
-          <font>earths.</font>
+        <font>Which equals to</font>
+          <font id="numofEarths" style="color: #EEA082">0</font>
+          <font>earths</font>
         <img id="earth" src="Images/Earth.jpg" style="margin-left:0px;" onload="hideImage(id)">
         <canvas id="earthCanvas" width="1320" height="120"></canvas>
       </p>
+      <p>To offset my carbon footprint on flights, I could</p>
+        <p>Cut down eating <font id="kgofBeef" style="color: #EEA082">0</font> kg beef every day</p>
+        <img id="equals" src="Images/Beef.jpg" style="margin-left:0px;">
+        <p>OR</p>
+        <p>Walk <font id="kmofWalking" style="color: #EEA082">0</font> km a day, instead of driving</p>
+        <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
+        <p>OR</p>
+        <p>Pay about <font id="payment" style="color: #EEA082">0</font> dollors to the <a href="https://offset.climateneutralnow.org/allprojects" style="color: #98C765">green projects</a></p>
+        <p>AND</p>
+        <p>Maybe don't fly that much this year :)</p>
     </div>
 
     <script>
@@ -561,7 +581,7 @@
           var flightPath = new google.maps.Polyline({
             path: flightPlanCoordinates,
             geodesic: true,
-            strokeColor: '#FF0000',
+            strokeColor: '#F5AC90',
             strokeOpacity: 1.0,
             strokeWeight: 2
           });
@@ -575,7 +595,7 @@
           //console.log(typeof map);
 
           AddCO2(thisDistance);
-          document.getElementById('total_CO2_1').innerText = "Total CO2: "+totalCO2_1+"kg";
+          //document.getElementById('total_CO2_1').innerText = "Total CO2: "+totalCO2_1+"kg";
 
           //document.getElementById('ft_text').innerText = from_address+" to "+to_address;
           AddText(from_address, to_address);
@@ -644,7 +664,7 @@
         totalDistance2 = 7118*numL + 2759*numM + 783*numS;
         totalCO2_2 = Math.round(7118*0.139*numL + 2759*0.139*numM + (55+0.105*583)*numS);
         document.getElementById("total_distance_2").innerText = "Total Distance: "+totalDistance2+"km";
-        document.getElementById("total_CO2_2").innerText = "Total CO2: "+totalCO2_2+"kg";
+        //document.getElementById("total_CO2_2").innerText = "Total CO2: "+totalCO2_2+"kg";
         Comic(2);
       }
 
@@ -666,9 +686,11 @@
         document.getElementById("kmaYear").innerText = totalDistance;
         document.getElementById("tonsCO2").innerText = (totalCO2/1000).toFixed(2); //指定小数点后的位数
         drawChart();
+        drawGlobeImage();
         drawCO2Image();
         drawTreesImage();
         drawEarthImage();
+        CarbonOffset();
       }
 
       //绘制柱状图
@@ -700,12 +722,13 @@
           },
           yAxis: {
             type: 'category',
-            data: ['Worldwide', 'Europe', 'Me']
+            data: ['Worldwide', 'European', 'Me']
           },
           series: [
             {
               name: 'Flights',
               type: 'bar',
+              color: '#EEA082',
               stack: '总量',
               label: {
                 show: true,
@@ -716,6 +739,7 @@
             {
               name: 'Others',
               type: 'bar',
+              color: '#EEC582',
               stack: '总量',
               label: {
                 show: true,
@@ -760,6 +784,28 @@
                 i = totalTimes2;
               }
             }
+          }
+        }
+      }
+
+      function drawGlobeImage()
+      {
+        var num = (totalDistance/40000).toFixed(2);
+        document.getElementById("timesofGlobe").innerText = num;
+        var c = document.getElementById("globeCanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        var img = document.getElementById("flight");
+        if (num<=1)
+        {
+          ctx.drawImage(img, 0, 0);
+        }
+        else
+        {
+          num = Math.round(num);
+          for (i=0;i<num;i++)
+          {
+            ctx.drawImage(img, img.width*i, 0);
           }
         }
       }
@@ -827,7 +873,7 @@
               else
               {
                 var imgEllipsis = document.getElementById("ellipsis");
-                ctx.drawImage(imgEllipsis, imgEllipsis.width*10, img.height*1);
+                ctx.drawImage(imgEllipsis, img.width*5, img.height*1);
                 i = Math.round(num);
               }
             }
@@ -861,19 +907,33 @@
         var ctx = c.getContext("2d");
         ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
         var img = document.getElementById("earth");
-        for (i=0; i<num; i++)
+        if(num<=1)
         {
-          if (i<10)
+          ctx.drawImage(img, 0, 0);
+        }
+        else
+        {
+          for (i=0; i<Math.round(num); i++)
           {
-            ctx.drawImage(img, img.width*i, 0);
-          }
-          else
-          {
-            var imgEllipsis = document.getElementById("ellipsis");
-            ctx.drawImage(imgEllipsis, img.width*10, 0);
-            i = num;
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              var imgEllipsis = document.getElementById("ellipsis");
+              ctx.drawImage(imgEllipsis, img.width*10, 0);
+              i = Math.round(num);
+            }
           }
         }
+      }
+
+      function CarbonOffset()
+      {
+        document.getElementById("kgofBeef").innerText = (totalCO2/26.61/366).toFixed(2);
+        document.getElementById("kmofWalking").innerText = (totalCO2/0.08/2.7/366).toFixed(1);
+        document.getElementById("payment").innerText = (totalCO2/1000*3).toFixed(1);
       }
     </script>
 

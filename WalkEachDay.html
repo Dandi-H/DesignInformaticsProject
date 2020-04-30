@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Comic</title>
+    <title>Keep Walking to Protect the Earth</title>
 </head>
-<body>
-    <p>
-        <font style="font-size:17px; font-family:Comic Sans MS">I walked</font>
-        <input type="number" placeholder="" id="input_num" name="input_num"
-            style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
-            oninput="calculateKm(input_num);drawCO2Image(input_num);calculateKg(input_num);calculateTrees(input_num);drawTreesImage(input_num)"/>
-        <font style="font-size:17px; font-family:Comic Sans MS">km each day last year.</font>
-    </p>
-    <p>
-        <font style="font-size:17px; font-family:Comic Sans MS">Which equals</font>
-        <font id="kmaYear" style="font-size:17px; font-family:Comic Sans MS">0</font>
-        <font style="font-size:17px; font-family:Comic Sans MS">km a year.</font>
-    </p>
-    <p style="font-size:17px; font-family:Comic Sans MS">If I didn't walk at all...</p>
-    <p>
-        <font style="font-size:17px; font-family:Comic Sans MS">That would produce</font>
-        <img id="kgCO2" alt="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideCO2Image()">
-        <p></p>
-        <canvas id="myCO2Canvas" width="1400" height="120"></canvas>
-        <p></p>
-        <font id="kgaYear" style="font-size:17px; font-family:Comic Sans MS">0</font>
-        <font style="font-size:17px; font-family:Comic Sans MS">kg CO2.</font>
-    </p>
-    <p>
-        <font style="font-size:17px; font-family:Comic Sans MS">Which need</font>
-        <img id="Tree" alt="Tree" src="Images/Tree.jpg" style="margin-left:0px;" onload="hideTreeImage()">
-        <p></p>
-        <canvas id="myTreesCanvas" width="1400" height="260"></canvas>
-        <p></p>
-        <font id="numofTrees" style="font-size:17px; font-family:Comic Sans MS">0</font>
-        <font style="font-size:17px; font-family:Comic Sans MS">trees to absorb.</font>
-    </p>
-    <p style="font-size:17px; font-family:Comic Sans MS">Keep walking to protect the earth!</p>
+<body style="font-size:17px; font-family:Comic Sans MS">
+    <h4 style="width: 97.5%; height: 25px; margin-left: 2.5%; margin-top: 20px">Keep Walking to Protect the Earth</h4>
+    <div style="border-top: silver dotted 1.5px; margin-left: 2.5%; margin-right: 2.5%">
+        <p>
+            <font>I walked</font>
+            <input type="number" placeholder="" id="input_num" name="input_num"
+                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+                oninput="calculateKm(input_num);drawCO2Image(input_num);calculateKg(input_num);calculateTrees(input_num);drawTreesImage(input_num)"/>
+            <font>km each day last year.</font>
+        </p>
+        <p>
+            <font>Which equals</font>
+            <font id="kmaYear" style="color: #EEA082">0</font>
+            <font>km a year.</font>
+        </p>
+        <p>If I didn't walk at all...</p>
+        <p>
+            <font>That would produce</font>
+            <img id="kgCO2" alt="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideCO2Image()">
+            <p></p>
+            <canvas id="myCO2Canvas" width="1400" height="120"></canvas>
+            <p></p>
+            <font id="kgaYear" style="color: #EEA082">0</font>
+            <font>kg CO2.</font>
+        </p>
+        <p>
+            <font>Which need</font>
+            <img id="Tree" alt="Tree" src="Images/Tree.jpg" style="margin-left:0px;" onload="hideTreeImage()">
+            <p></p>
+            <canvas id="myTreesCanvas" width="1400" height="260"></canvas>
+            <p></p>
+            <font id="numofTrees" style="color: #EEA082">0</font>
+            <font>trees to absorb.</font>
+        </p>
+        <p>Keep walking to protect the earth!</p>
+        <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
+    </div>
 
     <script>
         function hideCO2Image()
