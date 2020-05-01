@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <script src="jquery-3.5.0.js"></script>
     <script src="echarts.js"></script>
+    <script type="text/javascript" src="fullpage.js"></script>
+    <link rel="stylesheet" type="text/css" href="fullpage.css" />
 
     <style>
       /* Set the size of the div element that contains the map */
@@ -30,7 +32,7 @@
         width: 97.5%;
         margin-left: 2.5%;
         float: left;
-        height: 60px;
+        /* height: 60px; */
         font-family: "Comic Sans MS";
       }
       .col1{
@@ -71,6 +73,12 @@
         border-top: silver dotted 1.5px;
       }
 
+      .section{
+        width: 100%;
+        height: 100%;
+        /* text-align:center; */
+      }
+
       .title {
         background-color: #cccccc;
         border-bottom: #F5AC90 solid 1.5px; /*orange*/
@@ -99,139 +107,153 @@
       //document.getElementById("flight").style.display="none";
     }
   </script>
-  <body style="height: 100%">
-    <div  style="height: 50%">
-      <div class="titlebar">
-        <h3>My Plane Travel Footprint</h3>
-      </div>
-      <ul class="title">
-        <li class="activate" relate="1">Map</li>
-        <li relate="2">Brief</li>
-      </ul>
-      <div class="content">
-        <div id="1">
-          <div class="col1">
-            <div class="col1-left">
-              <!--The div element for the map -->
-              <div id="map"></div>
-            </div>
-            <div class="col1-right">
-              <div id="floating-panel">
-                <p>
-                  <p>Last year, I flied</p>
-                  <font style="font-size:16px">from </font>
-                  <input id="from_address" type="textbox" value=""
-                    style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
-                  <font style="font-size:16px"> to </font>
-                  <input id="to_address" type="textbox" value=""
-                    style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
-                  <input id="submit" type="button" style="font-size:15px; font-family:Comic Sans MS" value="Add">
-                </p>
+
+  <body> <!-- <body style="height: 100%"> -->
+    <div id="fullpage">
+      <div class="section" id="section0"> <!-- <div style="height: 50%"> -->
+        <div class="titlebar">
+          <h3>My Plane Travel Footprint</h3>
+        </div>
+        <ul class="title">
+          <li class="activate" relate="1">Map</li>
+          <li relate="2">Brief</li>
+        </ul>
+        <div class="content">
+          <div id="1">
+            <div class="col1">
+              <div class="col1-left">
+                <!--The div element for the map -->
+                <div id="map"></div>
               </div>
-              <p style="font-size:15px">
-                <p id="ft_text" style="color:silver"></p>
-                <p id="ft_distance" style="color: #EEA082"></p> <!--#F5AC90-->
-                <p id="total_distance_1" style="color: #EEA082"></p>
-                <!-- <p id="total_CO2_1"></p> -->
-              </p>
-              <!-- <a href="#jump" style="right: 5px; bottom: 5px; position: fixed">Jump to Comic</a> -->
-              <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
-                <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button>
-              </a>
+              <div class="col1-right">
+                <div id="floating-panel">
+                  <p>
+                    <p>Last year, I flied</p>
+                    <font style="font-size:16px">from </font>
+                    <input id="from_address" type="textbox" value=""
+                      style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
+                    <font style="font-size:16px"> to </font>
+                    <input id="to_address" type="textbox" value=""
+                      style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
+                    <input id="submit" type="button" style="font-size:15px; font-family:Comic Sans MS" value="Add">
+                  </p>
+                </div>
+                <p style="font-size:15px">
+                  <p id="ft_text" style="color:silver"></p>
+                  <p id="ft_distance" style="color: #EEA082"></p> <!--#F5AC90-->
+                  <p id="total_distance_1" style="color: #EEA082"></p>
+                  <!-- <p id="total_CO2_1"></p> -->
+                </p>
+                <!-- <a href="#jump" style="right: 5px; bottom: 5px; position: fixed">Jump to Comic</a> -->
+                <!-- <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
+                  <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button> -->
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="hide" id="2">
+            <div class="col2">
+              <p>Last year, I flied</p>
+              <font style="font-size:16px">Long-haul: </font>
+              <input type="number" placeholder="" id="input_l" name="input_l"
+                  style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+                  oninput="CalculateHaul(); drawFlightImage()"/>
+              <button title="over 6 hours in duration" style="font-size:12px; color:grey">?</button> <!-- font-weight: bold -->
+              <p></p>
+              <font style="font-size:16px">Medium-haul: </font>
+              <input type="number" placeholder="" id="input_m" name="input_m"
+                  style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+                  oninput="CalculateHaul(); drawFlightImage()"/>
+              <button title="3-6 hours in duration" style="font-size:12px; color:grey">?</button>
+              <p></p>
+              <font style="font-size:16px">Short-haul: </font>
+              <input type="number" placeholder="" id="input_s" name="input_s"
+                  style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+                  oninput="CalculateHaul(); drawFlightImage()"/>
+              <button title="up to 3 hours in duration" style="font-size:12px; color:grey">?</button>
+              <p id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS; color: #EEA082"></p>
+              <!-- <p id="total_CO2_2" style="font-size:15px; font-family:Comic Sans MS"></p> -->
+              <img id="flight" alt="flight" src="Images/Flight.jpg" style="margin-left:0px;" onload="hideImage(id)">
+              <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px;" onload="hideImage(id)">
+              <canvas id="flightCanvas" width="1320" height="360"></canvas>
+              <!-- <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
+                <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button> rgba(158, 185, 116, 0.829)
+              </a>-->
             </div>
           </div>
         </div>
-        <div class="hide" id="2">
-          <div class="col2">
-            <p>Last year, I flied</p>
-            <font style="font-size:16px">Long-haul: </font>
-            <input type="number" placeholder="" id="input_l" name="input_l"
-                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
-                oninput="CalculateHaul(); drawFlightImage()"/>
-            <button title="over 6 hours in duration" style="font-size:12px; color:grey">?</button> <!-- font-weight: bold -->
-            <p></p>
-            <font style="font-size:16px">Medium-haul: </font>
-            <input type="number" placeholder="" id="input_m" name="input_m"
-                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
-                oninput="CalculateHaul(); drawFlightImage()"/>
-            <button title="3-6 hours in duration" style="font-size:12px; color:grey">?</button>
-            <p></p>
-            <font style="font-size:16px">Short-haul: </font>
-            <input type="number" placeholder="" id="input_s" name="input_s"
-                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
-                oninput="CalculateHaul(); drawFlightImage()"/>
-            <button title="up to 3 hours in duration" style="font-size:12px; color:grey">?</button>
-            <p id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS; color: #EEA082"></p>
-            <!-- <p id="total_CO2_2" style="font-size:15px; font-family:Comic Sans MS"></p> -->
-            <img id="flight" alt="flight" src="Images/Flight.jpg" style="margin-left:0px;" onload="hideImage(id)">
-            <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px;" onload="hideImage(id)">
-            <canvas id="flightCanvas" width="1320" height="360"></canvas>
-            <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
-              <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button> <!-- rgba(158, 185, 116, 0.829) -->
-            </a>
-          </div>
-        </div>
+      </div>
+
+      <!-- <div class="col-comic" style="font-size:17px"> -->
+      <div class="section" id="section1" style="width: 95%; margin-left: 2.5%; margin-right: 2.5%; margin-top: 0.5%; border-top: silver dotted 1.5px;
+        font-family: Comic Sans MS; font-size:17px; display: inline-block; overflow: auto;">
+        <p id="jump">
+          <font>Last year, I travelled</font>
+            <font id="timesaYear" style="color: #EEA082">0</font>
+            <font>times, a total of</font>
+            <font id="kmaYear" style="color: #EEA082">0</font>
+            <font>km by plane</font>
+        </p>
+        <p>
+          <font>That's about</font>
+            <font id="timesofGlobe" style="color: #EEA082">0</font>
+            <font>times around the globe</font>
+          <canvas id="globeCanvas" width="1320" height="120"></canvas>
+        </p>
+        <p>
+          <font>Which produced</font>
+            <font id="tonsCO2" style="color: #EEA082">0</font>
+            <font>tons of CO2</font>
+          <img id="tCO2" src="Images/1tCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
+          <img id="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
+          <canvas id="CO2Canvas" width="1320" height="120"></canvas>
+        </p>
+        <p>
+          <font>That would be</font>
+            <font id="average" style="color: #EEA082">0</font>
+            <font>times the average</font>
+            <div id="chartContainer" style="width: 1000px; height: 300px"></div>
+        </p>
+        <p>Now we've already produced more CO2 than the earth can absorb</p>
+          <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px;">
+          <p>And <font style="color: #EEA082">5.5</font> trees are needed to absorb 100kg CO2</p>
+          <img id="equals" src="Images/Equals.jpg" style="margin-left:0px;">
+        <p>If everyone produces as much CO2 on their travels as I did</p>
+        <p>
+          <font>That would need</font>
+            <font id="numofTrees" style="color: #EEA082">0</font>
+            <font>trees to absorb</font>
+          <img id="bTrees" src="Images/100bTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
+          <img id="tTrees" src="Images/1tTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
+          <canvas id="treesCanvas" width="1320" height="290"></canvas>
+        </p>
+        <p>
+          <font>Which equals to</font>
+            <font id="numofEarths" style="color: #EEA082">0</font>
+            <font>earths</font>
+          <img id="earth" src="Images/Earth.jpg" style="margin-left:0px;" onload="hideImage(id)">
+          <canvas id="earthCanvas" width="1320" height="120"></canvas>
+        </p>
+        <p>To offset my carbon footprint on flights, I could</p>
+          <p>Cut down eating <font id="kgofBeef" style="color: #EEA082">0</font> kg beef every day</p>
+          <img id="equals" src="Images/Beef.jpg" style="margin-left:0px;">
+          <p>OR</p>
+          <p>Walk <font id="kmofWalking" style="color: #EEA082">0</font> km a day, instead of driving</p>
+          <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
+          <p>OR</p>
+          <p>Pay about <font id="payment" style="color: #EEA082">0</font> dollors to the <a href="https://offset.climateneutralnow.org/allprojects" style="color: #98C765">green projects</a></p>
+          <p>AND</p>
+          <p>Maybe don't fly that much this year :)</p>
       </div>
     </div>
-    <div class="col-comic" style="font-size:17px">
-      <p id="jump">
-        <font>Last year, I travelled</font>
-          <font id="timesaYear" style="color: #EEA082">0</font>
-          <font>times, a total of</font>
-          <font id="kmaYear" style="color: #EEA082">0</font>
-          <font>km by plane</font>
-      </p>
-      <p>
-        <font>That's about</font>
-          <font id="timesofGlobe" style="color: #EEA082">0</font>
-          <font>times around the globe</font>
-        <canvas id="globeCanvas" width="1320" height="120"></canvas>
-      </p>
-      <p>
-        <font>Which produced</font>
-          <font id="tonsCO2" style="color: #EEA082">0</font>
-          <font>tons of CO2</font>
-        <img id="tCO2" src="Images/1tCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
-        <img id="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
-        <canvas id="CO2Canvas" width="1320" height="120"></canvas>
-      </p>
-      <p>
-        <font>That would be</font>
-          <font id="average" style="color: #EEA082">0</font>
-          <font>times the average</font>
-          <div id="chartContainer" style="width: 1000px; height: 300px"></div>
-      </p>
-      <p>Now we've already produced more CO2 than the earth can absorb</p>
-        <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px;">
-        <p>And <font style="color: #EEA082">5.5</font> trees are needed to absorb 100kg CO2</p>
-        <img id="equals" src="Images/Equals.jpg" style="margin-left:0px;">
-      <p>If everyone produces as much CO2 on their travels as I did</p>
-      <p>
-        <font>That would need</font>
-          <font id="numofTrees" style="color: #EEA082">0</font>
-          <font>trees to absorb</font>
-        <img id="bTrees" src="Images/100bTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
-        <img id="tTrees" src="Images/1tTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
-        <canvas id="treesCanvas" width="1320" height="290"></canvas>
-      </p>
-      <p>
-        <font>Which equals to</font>
-          <font id="numofEarths" style="color: #EEA082">0</font>
-          <font>earths</font>
-        <img id="earth" src="Images/Earth.jpg" style="margin-left:0px;" onload="hideImage(id)">
-        <canvas id="earthCanvas" width="1320" height="120"></canvas>
-      </p>
-      <p>To offset my carbon footprint on flights, I could</p>
-        <p>Cut down eating <font id="kgofBeef" style="color: #EEA082">0</font> kg beef every day</p>
-        <img id="equals" src="Images/Beef.jpg" style="margin-left:0px;">
-        <p>OR</p>
-        <p>Walk <font id="kmofWalking" style="color: #EEA082">0</font> km a day, instead of driving</p>
-        <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
-        <p>OR</p>
-        <p>Pay about <font id="payment" style="color: #EEA082">0</font> dollors to the <a href="https://offset.climateneutralnow.org/allprojects" style="color: #98C765">green projects</a></p>
-        <p>AND</p>
-        <p>Maybe don't fly that much this year :)</p>
-    </div>
+
+    <script type="text/javascript">
+      var myFullpage = new fullpage('#fullpage', {
+          anchors: ['Enter', 'Result'],
+          //sectionsColor: ['#C63D0F', '#1BBC9B'],
+          scrollBar: false
+      });
+    </script>
 
     <script>
       var totalDistance1 = 0;
