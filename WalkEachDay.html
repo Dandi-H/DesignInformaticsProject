@@ -1,125 +1,227 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Keep Walking to Protect the Earth</title>
+  <title>Keep Walking to Protect the Earth</title>
+  <script type="text/javascript" src="fullpage.js"></script>
+  <link rel="stylesheet" type="text/css" href="fullpage.css" />
+  <style>
+    .titlebar{
+      width: 95%;
+      height: 25px;
+      margin-left: 5%;
+      margin-top: 20px;
+    }
+    .content{
+      margin-left: 5%;
+      margin-right: 5%;
+      border-top: silver dotted 1.5px;
+    }
+    .section{
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
+
+<!-- <script>
+  function hideImage(imgId)
+  {
+    document.getElementById(imgId).style.display="none";
+  }
+</script> -->
+
 <body style="font-size:17px; font-family:Comic Sans MS">
-    <h4 style="width: 97.5%; height: 25px; margin-left: 2.5%; margin-top: 20px">Keep Walking to Protect the Earth</h4>
-    <div style="border-top: silver dotted 1.5px; margin-left: 2.5%; margin-right: 2.5%">
-        <p>
+  <div id="fullpage">
+    <div class="section " id="section0">
+      <div class="slide" id="slide1">
+        <h4 class="titlebar">Keep Walking to Protect the Earth</h4>
+        <div class="content">
+          <p>
             <font>I walked</font>
             <input type="number" placeholder="" id="input_num" name="input_num"
-                style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
-                oninput="calculateKm(input_num);drawCO2Image(input_num);calculateKg(input_num);calculateTrees(input_num);drawTreesImage(input_num)"/>
+              style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
+              oninput="runFunction(input_num)"/>
             <font>km each day last year.</font>
-        </p>
-        <p>
+            <p></p>
+            <img id="rightFootprint" alt="rightFootprint" src="Images/Footprint-Right.jpg" style="margin-left:0px; display: none">
+            <img id="leftFootprint" alt="leftFootprint" src="Images/Footprint-Left.jpg" style="margin-left:0px; display: none">
+            <canvas id="footprintCanvas" width="1200" height="120"></canvas>
+          </p>
+          <p>
             <font>Which equals</font>
             <font id="kmaYear" style="color: #EEA082">0</font>
             <font>km a year.</font>
-        </p>
-        <p>If I didn't walk at all...</p>
-        <p>
+          </p>
+          <p>If I didn't walk at all...</p>
+          <img id="drive" src="Images/Drive.jpg" style="margin-left:0px">
+          <p>
             <font>That would produce</font>
-            <img id="kgCO2" alt="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideCO2Image()">
+            <img id="kgCO2" alt="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px; display: none">
             <p></p>
             <canvas id="myCO2Canvas" width="1400" height="120"></canvas>
             <p></p>
             <font id="kgaYear" style="color: #EEA082">0</font>
             <font>kg CO2.</font>
-        </p>
-        <p>
+          </p>
+        </div>
+      </div>
+
+      <div class="slide" id="slide2">
+        <h4 class="titlebar">Keep Walking to Protect the Earth</h4>
+        <div class="content">
+          <p>
             <font>Which need</font>
-            <img id="Tree" alt="Tree" src="Images/Tree.jpg" style="margin-left:0px;" onload="hideTreeImage()">
+            <img id="Tree" alt="Tree" src="Images/Tree.jpg" style="margin-left:0px; display: none">
+            <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px; display: none">
             <p></p>
-            <canvas id="myTreesCanvas" width="1400" height="260"></canvas>
+            <canvas id="myTreesCanvas" width="1320" height="100"></canvas>
+            <canvas id="myTreesCanvas_2" width="1320" height="100" style="display: none"></canvas>
+            <canvas id="myTreesCanvas_3" width="1320" height="100" style="display: none"></canvas>
             <p></p>
             <font id="numofTrees" style="color: #EEA082">0</font>
             <font>trees to absorb.</font>
-        </p>
-        <p>Keep walking to protect the earth!</p>
-        <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
+          </p>
+          <p>Keep walking to protect the earth!</p>
+          <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px">
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        function hideCO2Image()
-        {
-            document.getElementById("kgCO2").style.display="none";
-        }
+  <script type="text/javascript">
+    var myFullpage = new fullpage('#fullpage', {
+        anchors: ['Result'],
+        // sectionsColor: ['#C63D0F', '#1BBC9B'],
+        scrollBar: false
+    });
+  </script>
 
-        function calculateKm(input_num)
-        {
-            var num = Math.round(input_num.value*365);
-            document.getElementById('kmaYear').innerText = num;
-            // var a = document.getElementById('info').value; // 获得id为info的input标签的内容
-            // document.getElementById('result').innerText = a; // 显示，在id为result处动态显示（清除旧的显示新的）
-        }
+  <script>
+    function runFunction(input_num)
+    {
+      drawFootprintImage(input_num);
+      calculateKm(input_num);
+      drawCO2Image(input_num);
+      drawTreesImage(input_num);
+    }
 
-        function drawCO2Image(input_num)
+    function drawFootprintImage(input_num)
+    {
+      var c = document.getElementById("footprintCanvas");
+      var ctx = c.getContext("2d");
+      ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+      if (input_num.value<=1)
+      {
+        var img = document.getElementById("rightFootprint");
+        ctx.drawImage(img, 0, 0);
+      }
+      else
+      {
+        num = Math.round(input_num.value);
+        for (i=0; i<num; i++)
         {
-            var num = Math.round(input_num.value*365/10000*8*2.7);
-            document.getElementById("input_num").onchange //=function()
-            {
-                var c = document.getElementById("myCO2Canvas");
-                var ctx = c.getContext("2d");
-                ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
-                var img = document.getElementById("kgCO2");
-                for (i=0; i<num; i++)
-                {
-                    // console.log(i);
-                    if (i<10)
-                    {
-                        ctx.drawImage(img, img.width*i, 0);
-                    }
-                    else
-                    {
-                        j=parseInt(i/10); //保留整数
-                        ctx.drawImage(img, img.width*(i-10*j), img.height*j);
-                    }
-                }
-            }
+          if(i%2==0)
+          {
+            var img = document.getElementById("rightFootprint");
+          }
+          else
+          {
+            var img = document.getElementById("leftFootprint");
+          }
+          ctx.drawImage(img, img.width*i, 0);
         }
+      }
+    }
 
-        function calculateKg(input_num)
-        {
-            var num = Math.round(input_num.value*365/100*8*2.7); //四舍五入
-            document.getElementById('kgaYear').innerText = num;
-        }
+    function calculateKm(input_num)
+    {
+      var num = Math.round(input_num.value*365);
+      document.getElementById('kmaYear').innerText = num;
+      // var a = document.getElementById('info').value; // 获得id为info的input标签的内容
+      // document.getElementById('result').innerText = a; // 显示，在id为result处动态显示（清除旧的显示新的）
+    }
 
-        function hideTreeImage()
+    function drawCO2Image(input_num)
+    {
+      calculateKg(input_num);
+      var num = Math.round(input_num.value*365/10000*8*2.7);
+      document.getElementById("input_num").onchange //=function()
+      {
+        var c = document.getElementById("myCO2Canvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        var img = document.getElementById("kgCO2");
+        for (i=0; i<num; i++)
         {
-            document.getElementById("Tree").style.display="none";
+          // console.log(i);
+          if (i<10)
+          {
+            ctx.drawImage(img, img.width*i, 0);
+          }
+          else
+          {
+            j=parseInt(i/10); //保留整数
+            ctx.drawImage(img, img.width*(i-10*j), img.height*j);
+          }
         }
+      }
+    }
 
-        function drawTreesImage(input_num)
-        {
-            var num = Math.round(input_num.value*365/100*8*2.7/18.3);
-            document.getElementById("input_num").onchange
-            {
-                var c_t = document.getElementById("myTreesCanvas");
-                var ctx_t = c_t.getContext("2d");
-                ctx_t.clearRect(0,0,c_t.width,c_t.height); //Clear Canvas
-                var img_t = document.getElementById("Tree");
-                for (i=0; i<num; i++)
-                {
-                    if (i<15)
-                    {
-                        ctx_t.drawImage(img_t, img_t.width*i, 0);
-                    }
-                    else
-                    {
-                        j=parseInt(i/15); //保留整数
-                        ctx_t.drawImage(img_t, img_t.width*(i-15*j), img_t.height*j);
-                    }
-                }
-            }
-        }
+    function calculateKg(input_num)
+    {
+      var num = Math.round(input_num.value*365/100*8*2.7); //四舍五入
+      document.getElementById('kgaYear').innerText = num;
+    }
 
-        function calculateTrees(input_num)
+    function drawTreesImage(input_num)
+    {
+      var num = Math.round(input_num.value*365/100*8*2.7/18.3);
+      document.getElementById("input_num").onchange
+      {
+        calculateTrees(input_num);
+        var c = document.getElementById("myTreesCanvas");
+        var c2 = document.getElementById("myTreesCanvas_2");
+        var c3 = document.getElementById("myTreesCanvas_3");
+        var ctx = c.getContext("2d");
+        var ctx2 = c2.getContext("2d");
+        var ctx3 = c3.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        ctx2.clearRect(0,0,c2.width,c2.height); //Clear Canvas
+        ctx3.clearRect(0,0,c3.width,c3.height); //Clear Canvas
+        c2.style.display="none";
+        c3.style.display="none";
+        var img = document.getElementById("Tree");
+        for (i=0; i<num; i++)
         {
-            var num = Math.round(input_num.value*365/100*8*2.7/18.3); //四舍五入
-            document.getElementById('numofTrees').innerText = num;
+          if (i<15)
+          {
+            ctx.drawImage(img, img.width*i, 0);
+          }
+          else if (i<30)
+          {
+            c2.style.display="inline";
+            ctx2.drawImage(img, img.width*(i-15), 0);
+          }
+          else if (i<45)
+          {
+            c3.style.display="inline";
+            ctx3.drawImage(img, img.width*(i-30), 0);
+          }
+          else
+          {
+            var imgEllipsis = document.getElementById("ellipsis");
+            ctx3.drawImage(imgEllipsis, img.width*15, 0);
+            i = num;
+          }
         }
-    </script>
+      }
+    }
+
+    function calculateTrees(input_num)
+    {
+      var num = Math.round(input_num.value*365/100*8*2.7/18.3); //四舍五入
+      document.getElementById('numofTrees').innerText = num;
+    }
+  </script>
 </body>
 </html>

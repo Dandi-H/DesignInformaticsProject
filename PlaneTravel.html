@@ -4,6 +4,9 @@
     <title>My Plane Travel Footprint</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5_OYhnXfjVakPuA44gussUU19XrdWGFc&callback=initMap">
+    </script>
     <script src="jquery-3.5.0.js"></script>
     <script src="echarts.js"></script>
     <script type="text/javascript" src="fullpage.js"></script>
@@ -54,14 +57,23 @@
         height: 100%;
       }
       .col2{
-        width: 97.5%;
-        margin-left: 2.5%;
+        width: 97%;
+        margin-left: 3%;
         float: left;
         height: 100%;
         font-family: "Comic Sans MS";
         overflow: auto;
       }
       .col-comic{
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+        font-family: Comic Sans MS;
+        font-size: 17px;
+        display: inline-block;
+        overflow: auto;
+      }
+      /* .col-comic{
         display: inline-block;
         width: 95%;
         margin-left: 2.5%;
@@ -71,7 +83,7 @@
         font-family: "Comic Sans MS";
         overflow: auto;
         border-top: silver dotted 1.5px;
-      }
+      } */
 
       .section{
         width: 100%;
@@ -100,13 +112,13 @@
       }
     </style>
   </head>
-  <script>
+  <!-- <script>
     function hideImage(imgId)
     {
       document.getElementById(imgId).style.display="none";
       //document.getElementById("flight").style.display="none";
     }
-  </script>
+  </script> -->
 
   <body> <!-- <body style="height: 100%"> -->
     <div id="fullpage">
@@ -173,8 +185,8 @@
               <button title="up to 3 hours in duration" style="font-size:12px; color:grey">?</button>
               <p id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS; color: #EEA082"></p>
               <!-- <p id="total_CO2_2" style="font-size:15px; font-family:Comic Sans MS"></p> -->
-              <img id="flight" alt="flight" src="Images/Flight.jpg" style="margin-left:0px;" onload="hideImage(id)">
-              <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px;" onload="hideImage(id)">
+              <img id="flight" alt="flight" src="Images/Flight.jpg" style="margin-left:0px; display: none">
+              <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px; display: none">
               <canvas id="flightCanvas" width="1320" height="360"></canvas>
               <!-- <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
                 <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button> rgba(158, 185, 116, 0.829)
@@ -185,65 +197,93 @@
       </div>
 
       <!-- <div class="col-comic" style="font-size:17px"> -->
-      <div class="section" id="section1" style="width: 95%; margin-left: 2.5%; margin-right: 2.5%; margin-top: 0.5%; border-top: silver dotted 1.5px;
-        font-family: Comic Sans MS; font-size:17px; display: inline-block; overflow: auto;">
-        <p id="jump">
-          <font>Last year, I travelled</font>
-            <font id="timesaYear" style="color: #EEA082">0</font>
-            <font>times, a total of</font>
-            <font id="kmaYear" style="color: #EEA082">0</font>
-            <font>km by plane</font>
-        </p>
-        <p>
-          <font>That's about</font>
-            <font id="timesofGlobe" style="color: #EEA082">0</font>
-            <font>times around the globe</font>
-          <canvas id="globeCanvas" width="1320" height="120"></canvas>
-        </p>
-        <p>
-          <font>Which produced</font>
-            <font id="tonsCO2" style="color: #EEA082">0</font>
-            <font>tons of CO2</font>
-          <img id="tCO2" src="Images/1tCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
-          <img id="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px;" onload="hideImage(id)">
-          <canvas id="CO2Canvas" width="1320" height="120"></canvas>
-        </p>
-        <p>
-          <font>That would be</font>
-            <font id="average" style="color: #EEA082">0</font>
-            <font>times the average</font>
-            <div id="chartContainer" style="width: 1000px; height: 300px"></div>
-        </p>
-        <p>Now we've already produced more CO2 than the earth can absorb</p>
-          <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px;">
-          <p>And <font style="color: #EEA082">5.5</font> trees are needed to absorb 100kg CO2</p>
-          <img id="equals" src="Images/Equals.jpg" style="margin-left:0px;">
-        <p>If everyone produces as much CO2 on their travels as I did</p>
-        <p>
-          <font>That would need</font>
-            <font id="numofTrees" style="color: #EEA082">0</font>
-            <font>trees to absorb</font>
-          <img id="bTrees" src="Images/100bTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
-          <img id="tTrees" src="Images/1tTrees.jpg" style="margin-left:0px;" onload="hideImage(id)">
-          <canvas id="treesCanvas" width="1320" height="290"></canvas>
-        </p>
-        <p>
-          <font>Which equals to</font>
-            <font id="numofEarths" style="color: #EEA082">0</font>
-            <font>earths</font>
-          <img id="earth" src="Images/Earth.jpg" style="margin-left:0px;" onload="hideImage(id)">
-          <canvas id="earthCanvas" width="1320" height="120"></canvas>
-        </p>
-        <p>To offset my carbon footprint on flights, I could</p>
-          <p>Cut down eating <font id="kgofBeef" style="color: #EEA082">0</font> kg beef every day</p>
-          <img id="equals" src="Images/Beef.jpg" style="margin-left:0px;">
-          <p>OR</p>
-          <p>Walk <font id="kmofWalking" style="color: #EEA082">0</font> km a day, instead of driving</p>
-          <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
-          <p>OR</p>
-          <p>Pay about <font id="payment" style="color: #EEA082">0</font> dollors to the <a href="https://offset.climateneutralnow.org/allprojects" style="color: #98C765">green projects</a></p>
-          <p>AND</p>
-          <p>Maybe don't fly that much this year :)</p>
+      <div class="section" id="section1" style="margin-top: 0.5%; border-top: silver dotted 1.5px">
+        <div class="slide" id="slide1">
+          <div class="col-comic">
+            <p id="jump">
+              <font>Last year, I travelled</font>
+                <font id="timesaYear" style="color: #EEA082">0</font>
+                <font>times, a total of</font>
+                <font id="kmaYear" style="color: #EEA082">0</font>
+                <font>km by plane</font>
+            </p>
+            <p>
+              <font>That's about</font>
+                <font id="timesofGlobe" style="color: #EEA082">0</font>
+                <font>times around the globe</font>
+              <p></p>
+              <canvas id="globeCanvas" width="1320" height="120"></canvas>
+            </p>
+            <p>
+              <font>Which produced</font>
+                <font id="tonsCO2" style="color: #EEA082">0</font>
+                <font>tons of CO2</font>
+              <img id="tCO2" src="Images/1tCO2.jpg" style="margin-left:0px; display: none">
+              <img id="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px; display: none">
+              <p></p>
+              <canvas id="CO2Canvas" width="1320" height="120"></canvas>
+            </p>
+            <p>
+              <font>That would be</font>
+                <font id="average" style="color: #EEA082">0</font>
+                <font>times the average</font>
+                <div id="chartContainer" style="width: 1000px; height: 250px"></div>
+            </p>
+          </div>
+        </div>
+
+        <div class="slide" id="slide2">
+          <div class="col-comic">
+            <p>Now we've already produced more CO2 than the earth can absorb</p>
+              <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px;">
+              <p>And <font style="color: #EEA082">5.5</font> trees are needed to absorb 100kg CO2</p>
+              <img id="equals" src="Images/Equals.jpg" style="margin-left:0px;">
+            <p>
+              If everyone produces as much CO2 on their travels as I did
+              <p></p>
+              <canvas id="CO2Canvas_2" width="1320" height="120"></canvas>
+            </p>
+          </div>
+        </div>
+
+        <div class="slide" id="slide3">
+          <div class="col-comic">
+            <p>
+              <font>That would need</font>
+                <font id="numofTrees" style="color: #EEA082">0</font>
+                <font>trees to absorb</font>
+              <p></p>
+              <img id="bTrees" src="Images/100bTrees.jpg" style="margin-left:0px; display: none">
+              <img id="tTrees" src="Images/1tTrees.jpg" style="margin-left:0px; display: none">
+              <canvas id="treesCanvas" width="1320" height="120"></canvas>
+              <canvas id="treesCanvas_2" width="1320" height="120" style="display: none"></canvas>
+              <canvas id="treesCanvas_3" width="1320" height="120" style="display: none"></canvas>
+            </p>
+            <p>
+              <font>Which equals to</font>
+                <font id="numofEarths" style="color: #EEA082">0</font>
+                <font>earths</font>
+              <p></p>
+              <img id="earth" src="Images/Earth.jpg" style="margin-left:0px; display: none">
+              <canvas id="earthCanvas" width="1320" height="120"></canvas>
+            </p>
+          </div>
+        </div>
+
+        <div class="slide" id="slide4">
+          <div class="col-comic">
+            <p>To offset my carbon footprint on flights, I could</p>
+              <p>Cut down eating <font id="kgofBeef" style="color: #EEA082">0</font> kg beef every day</p>
+              <img id="equals" src="Images/Beef.jpg" style="margin-left:0px;">
+              <p>OR</p>
+              <p>Walk <font id="kmofWalking" style="color: #EEA082">0</font> km a day, instead of driving</p>
+              <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
+              <p>OR</p>
+              <p>Pay about <font id="payment" style="color: #EEA082">0</font> dollors to the <a href="https://offset.climateneutralnow.org/allprojects" style="color: #98C765">green projects</a></p>
+              <p>AND</p>
+              <p>Maybe don't fly that much this year :)</p>
+            </div>
+        </div>
       </div>
     </div>
 
@@ -827,25 +867,7 @@
           num = Math.round(num);
           for (i=0;i<num;i++)
           {
-            ctx.drawImage(img, img.width*i, 0);
-          }
-        }
-      }
-
-      function drawCO2Image()
-      {
-        var num = Math.round(totalCO2/100);
-        var c = document.getElementById("CO2Canvas");
-        var ctx = c.getContext("2d");
-        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
-        if (num >= 7)
-        {
-          num = Math.round(num/10);
-          var img = document.getElementById("tCO2");
-          for (i=0; i<num; i++)
-          {
-            //console.log(i);
-            if (i<10)
+            if(i<10)
             {
               ctx.drawImage(img, img.width*i, 0);
             }
@@ -857,6 +879,39 @@
             }
           }
         }
+      }
+
+      function drawCO2Image()
+      {
+        var num = Math.round(totalCO2/100);
+        var c = document.getElementById("CO2Canvas");
+        var c2 = document.getElementById("CO2Canvas_2");
+        var ctx = c.getContext("2d");
+        var ctx2 = c2.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        ctx2.clearRect(0,0,c.width,c.height); //Clear Canvas
+
+        if (num >= 7)
+        {
+          num = Math.round(num/10);
+          var img = document.getElementById("tCO2");
+          for (i=0; i<num; i++)
+          {
+            //console.log(i);
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+              ctx2.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              var imgEllipsis = document.getElementById("ellipsis");
+              ctx.drawImage(imgEllipsis, img.width*10, 0);
+              ctx2.drawImage(imgEllipsis, img.width*10, 0);
+              i = num;
+            }
+          }
+        }
         else
         {
           var img = document.getElementById("kgCO2");
@@ -864,6 +919,7 @@
           for (i=0; i<num; i++)
           {
             ctx.drawImage(img, img.width*i, 0);
+            ctx2.drawImage(img, img.width*i, 0);
           }
         }
         //alert("Error input");
@@ -873,9 +929,18 @@
       {
         var num = totalCO2*78/1000/18.3;
         var c = document.getElementById("treesCanvas");
+        var c2 = document.getElementById("treesCanvas_2");
+        var c3 = document.getElementById("treesCanvas_3");
         var ctx = c.getContext("2d");
+        var ctx2 = c2.getContext("2d");
+        var ctx3 = c3.getContext("2d");
         ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
-        if (num > 20)
+        ctx2.clearRect(0,0,c2.width,c2.height); //Clear Canvas
+        ctx3.clearRect(0,0,c3.width,c3.height); //Clear Canvas
+        c2.style.display="none";
+        c3.style.display="none";
+
+        if (num >= 30)
         {
           var img = document.getElementById("tTrees");
           num = num/10;
@@ -885,20 +950,36 @@
             {
               ctx.drawImage(img, img.width*i, 0);
             }
+            else if (i<10)
+            {
+              c2.style.display="inline";
+              ctx2.drawImage(img, img.width*(i-5), 0);
+            }
+            else if (i<15)
+            {
+              c3.style.display="inline";
+              ctx3.drawImage(img, img.width*(i-10), 0);
+            }
             else
             {
-              j=parseInt(i/5); //保留整数
-              if (j<=1)
-              {
-                ctx.drawImage(img, img.width*(i-5*j), img.height*j);
-              }
-              else
-              {
-                var imgEllipsis = document.getElementById("ellipsis");
-                ctx.drawImage(imgEllipsis, img.width*5, img.height*1);
-                i = Math.round(num);
-              }
+              var imgEllipsis = document.getElementById("ellipsis");
+              ctx3.drawImage(imgEllipsis, img.width*5, 0);
+              i = Math.round(num);
             }
+            // else
+            // {
+            //   j=parseInt(i/5); //保留整数
+            //   if (j<=1)
+            //   {
+            //     ctx.drawImage(img, img.width*(i-5*j), img.height*j);
+            //   }
+            //   else
+            //   {
+            //     var imgEllipsis = document.getElementById("ellipsis");
+            //     ctx.drawImage(imgEllipsis, img.width*5, img.height*1);
+            //     i = Math.round(num);
+            //   }
+            // }
           }
           document.getElementById("numofTrees").innerText = num.toFixed(2)+" trillion";
         }
@@ -911,11 +992,21 @@
             {
               ctx.drawImage(img, img.width*i, 0);
             }
+            else if (i<20)
+            {
+              c2.style.display="inline";
+              ctx2.drawImage(img, img.width*(i-10), 0);
+            }
             else
             {
-              j=parseInt(i/10); //保留整数
-              ctx.drawImage(img, img.width*(i-10*j), img.height*j);
+              c3.style.display="inline";
+              ctx3.drawImage(img, img.width*(i-20), 0);
             }
+            // else
+            // {
+            //   j=parseInt(i/10); //保留整数
+            //   ctx.drawImage(img, img.width*(i-10*j), img.height*j);
+            // }
           }
           document.getElementById("numofTrees").innerText = Math.round(100*num)+" billion";
         }
@@ -959,8 +1050,6 @@
       }
     </script>
 
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5_OYhnXfjVakPuA44gussUU19XrdWGFc&callback=initMap">
-    </script>
+
   </body>
 </html>
