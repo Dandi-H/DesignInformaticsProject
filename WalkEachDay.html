@@ -37,7 +37,7 @@
         <h4 class="titlebar">Keep Walking to Protect the Earth</h4>
         <div class="content">
           <p>
-            <font>I walked</font>
+            <font>You walked</font>
             <input type="number" placeholder="" id="input_num" name="input_num"
               style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
               oninput="runFunction(input_num)"/>
@@ -52,7 +52,7 @@
             <font id="kmaYear" style="color: #EEA082">0</font>
             <font>km a year.</font>
           </p>
-          <p>If I didn't walk at all...</p>
+          <p>If you didn't walk at all...</p>
           <img id="drive" src="Images/Drive.jpg" style="margin-left:0px">
           <p>
             <font>That would produce</font>
@@ -136,7 +136,7 @@
     function calculateKm(input_num)
     {
       var num = Math.round(input_num.value*365);
-      document.getElementById('kmaYear').innerText = num;
+      document.getElementById('kmaYear').innerText = num.toLocaleString();
       // var a = document.getElementById('info').value; // 获得id为info的input标签的内容
       // document.getElementById('result').innerText = a; // 显示，在id为result处动态显示（清除旧的显示新的）
     }
@@ -175,7 +175,7 @@
 
     function drawTreesImage(input_num)
     {
-      var num = Math.round(input_num.value*365/100*8*2.7/18.3);
+      var num = Math.round(input_num.value*365/100*8*2.7/22);
       document.getElementById("input_num").onchange
       {
         calculateTrees(input_num);
@@ -219,7 +219,7 @@
 
     function calculateTrees(input_num)
     {
-      var num = Math.round(input_num.value*365/100*8*2.7/18.3); //四舍五入
+      var num = Math.round(input_num.value*365/100*8*2.7/22); //四舍五入
       document.getElementById('numofTrees').innerText = num;
     }
   </script>

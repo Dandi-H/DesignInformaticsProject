@@ -84,6 +84,11 @@
         overflow: auto;
         border-top: silver dotted 1.5px;
       } */
+      .link{
+        /* color: #98C765; */
+        color: silver;
+        text-decoration: none;
+      }
 
       .section{
         width: 100%;
@@ -140,7 +145,7 @@
               <div class="col1-right">
                 <div id="floating-panel">
                   <p>
-                    <p>Last year, I flied</p>
+                    <p>Last year, you flew</p>
                     <font style="font-size:16px">from </font>
                     <input id="from_address" type="textbox" value=""
                       style="font-size:17px; font-family:Comic Sans MS; width:120px; height:15px; padding:5px">
@@ -165,7 +170,7 @@
           </div>
           <div class="hide" id="2">
             <div class="col2">
-              <p>Last year, I flied</p>
+              <p>Last year, you flew</p>
               <font style="font-size:16px">Long-haul: </font>
               <input type="number" placeholder="" id="input_l" name="input_l"
                   style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
@@ -183,7 +188,10 @@
                   style="font-size:17px; font-family:Comic Sans MS; width:70px; height:15px; padding:5px"
                   oninput="CalculateHaul(); drawFlightImage()"/>
               <button title="up to 3 hours in duration" style="font-size:12px; color:grey">?</button>
-              <p id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS; color: #EEA082"></p>
+              <p>
+                <font id="total_distance_2" style="font-size:15px; font-family:Comic Sans MS; color: #EEA082"></font>
+                <a class="link" href="https://www.researchgate.net/figure/Flight-length-and-duration-for-short-haul-and-long-haul-flights_tbl7_267927654">···</a>
+              </p>
               <!-- <p id="total_CO2_2" style="font-size:15px; font-family:Comic Sans MS"></p> -->
               <img id="flight" alt="flight" src="Images/Flight.jpg" style="margin-left:0px; display: none">
               <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px; display: none">
@@ -201,47 +209,62 @@
         <div class="slide" id="slide1">
           <div class="col-comic">
             <p id="jump">
-              <font>Last year, I travelled</font>
+              <font>Last year, you travelled</font>
                 <font id="timesaYear" style="color: #EEA082">0</font>
                 <font>times, a total of</font>
                 <font id="kmaYear" style="color: #EEA082">0</font>
-                <font>km by plane</font>
+                <font>km by plane.</font>
             </p>
             <p>
               <font>That's about</font>
                 <font id="timesofGlobe" style="color: #EEA082">0</font>
-                <font>times around the globe</font>
+                <font>times around the globe.</font>
               <p></p>
               <canvas id="globeCanvas" width="1320" height="120"></canvas>
             </p>
             <p>
               <font>Which produced</font>
                 <font id="tonsCO2" style="color: #EEA082">0</font>
-                <font>tons of CO2</font>
+                <font>tons of CO2.</font>
+                <a class="link" href="https://books.google.co.uk/books?id=fjz4CAAAQBAJ&pg=PT8#v=onepage&q&f=false">···</a>
               <img id="tCO2" src="Images/1tCO2.jpg" style="margin-left:0px; display: none">
               <img id="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px; display: none">
               <p></p>
               <canvas id="CO2Canvas" width="1320" height="120"></canvas>
             </p>
             <p>
-              <font>That would be</font>
+              <!-- <font>That would be</font>
                 <font id="average" style="color: #EEA082">0</font>
-                <font>times the average</font>
-                <div id="chartContainer" style="width: 1000px; height: 250px"></div>
+                <font>times the average</font> -->
+              <font id="average"></font>
+                <a class="link" href="https://en.wikipedia.org/wiki/List_of_countries_by_carbon_dioxide_emissions">···</a>
+                <div id="chartContainer" style="width: 1000px; height: 225px"></div>
             </p>
           </div>
         </div>
 
         <div class="slide" id="slide2">
           <div class="col-comic">
-            <p>Now we've already produced more CO2 than the earth can absorb</p>
-              <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px;">
-              <p>And <font style="color: #EEA082">5.5</font> trees are needed to absorb 100kg CO2</p>
-              <img id="equals" src="Images/Equals.jpg" style="margin-left:0px;">
+            <p>Now we've already produced more CO2 than the earth can absorb.
+              <a class="link" href="https://www.vice.com/en_us/article/wjmqwb/plants-are-losing-their-capacity-to-absorb-human-co2-emissions">···</a>
+            </p>
+              <img id="earthAbsorb" src="Images/EarthAbsorb.jpg" style="margin-left:0px">
+              <p>
+                And it would take <font style="color: #EEA082">4.5</font> trees a year to absorb 100kg CO2.
+                <a class="link" href="https://www.carbonpirates.com/blog/how-much-carbon-do-trees-absorb">···</a>
+              </p>
+              <img id="equals" src="Images/Equals.jpg" style="margin-left:0px">
             <p>
-              If everyone produces as much CO2 on their travels as I did
+              <font>So it would need</font>
+                <font id="personalNumofTrees" style="color: #EEA082">0</font>
+                <font>trees to absorb the CO2 you produced through flights.</font>
               <p></p>
-              <canvas id="CO2Canvas_2" width="1320" height="120"></canvas>
+              <img id="tree" src="Images/Tree.jpg" style="margin-left:0px; display: none">
+              <img id="tenTrees" src="Images/10Trees.jpg" style="margin-left:0px; display: none">
+              <img id="hTrees" src="Images/100Trees.jpg" style="margin-left:0px; display: none">
+              <canvas id="personalTreesCanvas" width="1200" height="120"></canvas>
+              <canvas id="personalTreesCanvas_2" width="1320" height="120"></canvas>
+              <!-- <canvas id="personalTreesCanvas_3" width="1320" height="120" style="display: none"></canvas> -->
             </p>
           </div>
         </div>
@@ -249,14 +272,16 @@
         <div class="slide" id="slide3">
           <div class="col-comic">
             <p>
-              <font>That would need</font>
+              <p>If everyone produces as much CO2 on their travels as you did,</p>
+              <!-- <canvas id="CO2Canvas_2" width="1320" height="120"></canvas> -->
+              <font>that would take</font>
                 <font id="numofTrees" style="color: #EEA082">0</font>
-                <font>trees to absorb</font>
+                <font>trees a whole year to absorb.</font>
               <p></p>
               <img id="bTrees" src="Images/100bTrees.jpg" style="margin-left:0px; display: none">
               <img id="tTrees" src="Images/1tTrees.jpg" style="margin-left:0px; display: none">
-              <canvas id="treesCanvas" width="1320" height="120"></canvas>
-              <canvas id="treesCanvas_2" width="1320" height="120" style="display: none"></canvas>
+              <canvas id="treesCanvas" width="1200" height="120"></canvas>
+              <canvas id="treesCanvas_2" width="1200" height="120" style="display: none"></canvas>
               <canvas id="treesCanvas_3" width="1320" height="120" style="display: none"></canvas>
             </p>
             <p>
@@ -272,17 +297,39 @@
 
         <div class="slide" id="slide4">
           <div class="col-comic">
-            <p>To offset my carbon footprint on flights, I could</p>
-              <p>Cut down eating <font id="kgofBeef" style="color: #EEA082">0</font> kg beef every day</p>
-              <img id="equals" src="Images/Beef.jpg" style="margin-left:0px;">
-              <p>OR</p>
-              <p>Walk <font id="kmofWalking" style="color: #EEA082">0</font> km a day, instead of driving</p>
-              <img id="equals" src="Images/Footprint.jpg" style="margin-left:0px;">
-              <p>OR</p>
-              <p>Pay about <font id="payment" style="color: #EEA082">0</font> dollors to the <a href="https://offset.climateneutralnow.org/allprojects" style="color: #98C765">green projects</a></p>
-              <p>AND</p>
-              <p>Maybe don't fly that much this year :)</p>
-            </div>
+            <p>To offset your carbon footprint on flights, you could</p>
+            <p>
+              <font>Cut down eating</font>
+                <font id="kgofBeef" style="color: #EEA082">0</font>
+                <font>kg beef every day.</font>
+              <img id="beef" src="Images/Beef.jpg" style="margin-left:0px; display: none">
+              <p></p>
+              <canvas id="beefCanvas" width="1200" height="120"></canvas>
+            </p>
+            <!-- <p>OR</p> -->
+            <p>
+              <font>OR Walk</font>
+                <font id="kmofWalking" style="color: #EEA082">0</font>
+                <font>km a day, instead of driving.</font>
+              <img id="rightFootprint" alt="rightFootprint" src="Images/Footprint-Right.jpg" style="margin-left:0px; display: none">
+              <img id="leftFootprint" alt="leftFootprint" src="Images/Footprint-Left.jpg" style="margin-left:0px; display: none">
+              <p></p>
+              <canvas id="footprintCanvas" width="1200" height="120"></canvas>
+            </p>
+            <!-- <p>OR</p> -->
+            <p>
+              <font>OR Donate about</font>
+                <font id="payment" style="color: #EEA082">0</font>
+                <font>dollars to the</font>
+                <a href="https://offset.climateneutralnow.org/allprojects" style="color: #98C765">green projects</a>
+                <font>.</font>
+              <img id="dollar" src="Images/Dollar.jpg" style="margin-left:0px; display: none">
+              <p></p>
+              <canvas id="dollarsCanvas" width="1200" height="120"></canvas>
+            </p>
+            <p>AND</p>
+            <p>Maybe don't fly that much this year :)</p>
+          </div>
         </div>
       </div>
     </div>
@@ -652,8 +699,8 @@
           thisDistance = Number(Distance(from.lat(), from.lng(), to.lat(), to.lng()));
           totalTimes1 = totalTimes1+1;
           totalDistance1 = thisDistance + totalDistance1;
-          document.getElementById('ft_distance').innerText = "Distance: "+Distance(from.lat(), from.lng(), to.lat(), to.lng())+"km";
-          document.getElementById('total_distance_1').innerText = "Total Distance: "+totalDistance1+"km";
+          document.getElementById('ft_distance').innerText = "Distance: "+Distance(from.lat(), from.lng(), to.lat(), to.lng()).toLocaleString()+"km";
+          document.getElementById('total_distance_1').innerText = "Total Distance: "+totalDistance1.toLocaleString()+"km";
           //console.log(typeof map);
 
           AddCO2(thisDistance);
@@ -725,7 +772,7 @@
         totalTimes2 = 1*numL + 1*numM + 1*numS;
         totalDistance2 = 7118*numL + 2759*numM + 783*numS;
         totalCO2_2 = Math.round(7118*0.139*numL + 2759*0.139*numM + (55+0.105*583)*numS);
-        document.getElementById("total_distance_2").innerText = "Total Distance: "+totalDistance2+"km";
+        document.getElementById("total_distance_2").innerText = "Total Distance: "+totalDistance2.toLocaleString()+"km";
         //document.getElementById("total_CO2_2").innerText = "Total CO2: "+totalCO2_2+"kg";
         Comic(2);
       }
@@ -745,20 +792,25 @@
           totalCO2 = totalCO2_2;
         }
         document.getElementById("timesaYear").innerText = totalTimes;
-        document.getElementById("kmaYear").innerText = totalDistance;
+        document.getElementById("kmaYear").innerText = totalDistance.toLocaleString();
         document.getElementById("tonsCO2").innerText = (totalCO2/1000).toFixed(2); //指定小数点后的位数
         drawChart();
         drawGlobeImage();
         drawCO2Image();
+        drawPersonalTreesImage();
         drawTreesImage();
         drawEarthImage();
-        CarbonOffset();
+        drawBeefImage();
+        drawFootprintImage();
+        drawDollarsImage();
+        // CarbonOffset();
       }
 
       //绘制柱状图
       function drawChart()
       {
-        document.getElementById("average").innerText = Math.round(totalCO2/100);
+        // document.getElementById("average").innerText = Math.round(totalCO2/100);
+        compare();
         var dom = document.getElementById("chartContainer");
         var myChart = echarts.init(dom);
         var app = {};
@@ -813,6 +865,35 @@
         };;
         if (option && typeof option === "object") {
             myChart.setOption(option, true);
+        }
+      }
+
+      function compare()
+      {
+        num = (totalCO2/1000).toFixed(1);
+        if (num<0.1)
+        {
+          document.getElementById("average").innerText = "Great! That would be less than the average of CO2 each people produces through their flights per year.";
+        }
+        else if (num<0.4)
+        {
+          document.getElementById("average").innerText = "That would be less than the CO2 each European produces through their flights per year, but still "+num*10+" times the average of the world.";
+        }
+        else if (num<=2.4)
+        {
+          document.getElementById("average").innerText = "That's more than the CO2 each European produces through their flights per year. Also "+num*10+" times the average of the world.";
+        }
+        else if (num<4.9)
+        {
+          document.getElementById("average").innerText = "That would be "+num*10+" times the average of CO2 each people produces through their flights per year. And that's even more than the total fossil CO2 emissions per person produce each year in some countries, such as Brazil.";
+        }
+        else if (num<=7)
+        {
+          document.getElementById("average").innerText = "That would be "+num*10+" times the average of CO2 each people produces through their flights per year. And that's even more than the total fossil CO2 emissions per person produce each year.";
+        }
+        else
+        {
+          document.getElementById("average").innerText = "That would be "+num*10+"times the average of CO2 each people produces through their flights per year. And that's even more than the total fossil CO2 emissions per European produce each year.";
         }
       }
 
@@ -885,11 +966,11 @@
       {
         var num = Math.round(totalCO2/100);
         var c = document.getElementById("CO2Canvas");
-        var c2 = document.getElementById("CO2Canvas_2");
+        // var c2 = document.getElementById("CO2Canvas_2");
         var ctx = c.getContext("2d");
-        var ctx2 = c2.getContext("2d");
+        // var ctx2 = c2.getContext("2d");
         ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
-        ctx2.clearRect(0,0,c.width,c.height); //Clear Canvas
+        // ctx2.clearRect(0,0,c.width,c.height); //Clear Canvas
 
         if (num >= 7)
         {
@@ -901,13 +982,13 @@
             if (i<10)
             {
               ctx.drawImage(img, img.width*i, 0);
-              ctx2.drawImage(img, img.width*i, 0);
+              // ctx2.drawImage(img, img.width*i, 0);
             }
             else
             {
               var imgEllipsis = document.getElementById("ellipsis");
               ctx.drawImage(imgEllipsis, img.width*10, 0);
-              ctx2.drawImage(imgEllipsis, img.width*10, 0);
+              // ctx2.drawImage(imgEllipsis, img.width*10, 0);
               i = num;
             }
           }
@@ -919,15 +1000,83 @@
           for (i=0; i<num; i++)
           {
             ctx.drawImage(img, img.width*i, 0);
-            ctx2.drawImage(img, img.width*i, 0);
+            // ctx2.drawImage(img, img.width*i, 0);
           }
         }
         //alert("Error input");
       }
 
+      function drawPersonalTreesImage()
+      {
+        var num = totalCO2/22;
+        document.getElementById("personalNumofTrees").innerText = Math.round(num).toLocaleString();
+
+        var c = document.getElementById("personalTreesCanvas");
+        var c2 = document.getElementById("personalTreesCanvas_2");
+        var ctx = c.getContext("2d");
+        var ctx2 = c2.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        ctx2.clearRect(0,0,c2.width,c2.height); //Clear Canvas
+
+        if (num<30)
+        {
+          var img = document.getElementById("tree");
+          for (i=0; i<Math.round(num); i++)
+          {
+            if (i<15)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              ctx2.drawImage(img, img.width*(i-15), 0);
+            }
+          }
+        }
+        else if (num<200)
+        {
+          num = num/10;
+          var img = document.getElementById("tenTrees");
+          for (i=0; i<Math.round(num); i++)
+          {
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              ctx2.drawImage(img, img.width*(i-10), 0);
+            }
+          }
+        }
+        else
+        {
+          num = num/100;
+          var img = document.getElementById("hTrees");
+          for (i=0; i<Math.round(num); i++)
+          {
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else if (i<20)
+            {
+              // c2.style.display="inline";
+              ctx2.drawImage(img, img.width*(i-10), 0);
+            }
+            else
+            {
+              var imgEllipsis = document.getElementById("ellipsis");
+              ctx2.drawImage(imgEllipsis, img.width*10, 0);
+              i = Math.round(num);
+            }
+          }
+        }
+      }
+
       function drawTreesImage()
       {
-        var num = totalCO2*78/1000/18.3;
+        var num = totalCO2*78/1000/22;
         var c = document.getElementById("treesCanvas");
         var c2 = document.getElementById("treesCanvas_2");
         var c3 = document.getElementById("treesCanvas_3");
@@ -981,7 +1130,7 @@
             //   }
             // }
           }
-          document.getElementById("numofTrees").innerText = num.toFixed(2)+" trillion";
+          document.getElementById("numofTrees").innerText = (num.toFixed(2)*1000000000000).toLocaleString(); //num.toFixed(2)+" trillion";
         }
         else
         {
@@ -1008,7 +1157,7 @@
             //   ctx.drawImage(img, img.width*(i-10*j), img.height*j);
             // }
           }
-          document.getElementById("numofTrees").innerText = Math.round(100*num)+" billion";
+          document.getElementById("numofTrees").innerText = (Math.round(100*num)*1000000000).toLocaleString(); //Math.round(100*num)+" billion";
         }
       }
 
@@ -1042,12 +1191,101 @@
         }
       }
 
-      function CarbonOffset()
+      function drawBeefImage()
       {
         document.getElementById("kgofBeef").innerText = (totalCO2/26.61/366).toFixed(2);
-        document.getElementById("kmofWalking").innerText = (totalCO2/0.08/2.7/366).toFixed(1);
-        document.getElementById("payment").innerText = (totalCO2/1000*3).toFixed(1);
+        var num = Math.round(totalCO2/26.61/366);
+        var c = document.getElementById("beefCanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        var img = document.getElementById("beef");
+        if(num<=1)
+        {
+          ctx.drawImage(img, 0, 0);
+        }
+        else
+        {
+          for (i=0; i<Math.round(num); i++)
+          {
+            if (i<8)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            // else
+            // {
+            //   var imgEllipsis = document.getElementById("ellipsis");
+            //   ctx.drawImage(imgEllipsis, img.width*10, 0);
+            //   i = Math.round(num);
+            // }
+          }
+        }
       }
+
+      function drawFootprintImage()
+      {
+        document.getElementById("kmofWalking").innerText = (totalCO2/0.08/2.7/366).toFixed(1);
+        var num = Math.round(totalCO2/0.08/2.7/366/10);
+        var c = document.getElementById("footprintCanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        if (num.value<=1)
+        {
+          var img = document.getElementById("rightFootprint");
+          ctx.drawImage(img, 0, 0);
+        }
+        else
+        {
+          for (i=0; i<num; i++)
+          {
+            if(i%2==0)
+            {
+              var img = document.getElementById("rightFootprint");
+            }
+            else
+            {
+              var img = document.getElementById("leftFootprint");
+            }
+            ctx.drawImage(img, img.width*i, 0);
+          }
+        }
+      }
+
+      function drawDollarsImage()
+      {
+        document.getElementById("payment").innerText = (totalCO2/1000*3).toFixed(1);
+        var num = Math.round(totalCO2/1000*3);
+        var c = document.getElementById("dollarsCanvas");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+        var img = document.getElementById("dollar");
+        if(num<=1)
+        {
+          ctx.drawImage(img, 0, 0);
+        }
+        else
+        {
+          for (i=0; i<Math.round(num); i++)
+          {
+            if (i<10)
+            {
+              ctx.drawImage(img, img.width*i, 0);
+            }
+            else
+            {
+              var imgEllipsis = document.getElementById("ellipsis");
+              ctx.drawImage(imgEllipsis, img.width*10, 0);
+              i = Math.round(num);
+            }
+          }
+        }
+      }
+
+      // function CarbonOffset()
+      // {
+      //   document.getElementById("kgofBeef").innerText = (totalCO2/26.61/366).toFixed(2);
+      //   document.getElementById("kmofWalking").innerText = (totalCO2/0.08/2.7/366).toFixed(1);
+      //   document.getElementById("payment").innerText = (totalCO2/1000*3).toFixed(1);
+      // }
     </script>
 
 
