@@ -129,7 +129,10 @@
     <div id="fullpage">
       <div class="section" id="section0"> <!-- <div style="height: 50%"> -->
         <div class="titlebar">
-          <h3>My Plane Travel Footprint</h3>
+          <h3>
+            My Plane Travel Footprint
+            <font style="font-size:14px; font-weight:normal; font-family: Tahoma; color:white; float:right; margin-right:20px">*Please open with Chrome<br>*Please display in full-page</font>
+          </h3>
         </div>
         <ul class="title">
           <li class="activate" relate="1">Map</li>
@@ -163,8 +166,8 @@
                 </p>
                 <!-- <a href="#jump" style="right: 5px; bottom: 5px; position: fixed">Jump to Comic</a> -->
                 <!-- <a href="#jump" style="right: 10px; bottom: 10px; position: fixed">
-                  <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button> -->
-                </a>
+                  <button type="button" value="Jump" style="font-family:Comic Sans MS; border: 1px solid transparent; outline: none; color: white; background-color:#F5AC90">Jump to Comic</button>
+                </a> -->
               </div>
             </div>
           </div>
@@ -823,7 +826,7 @@
             }
           },
           legend: {
-            data: ['Flights', 'Others']
+            data: ['Flights', 'The rest of fossil CO2 emissions per person produce']
           },
           grid: {
             left: '3%',
@@ -836,7 +839,7 @@
           },
           yAxis: {
             type: 'category',
-            data: ['Worldwide', 'European', 'Me']
+            data: ['Worldwide', 'European', 'You']
           },
           series: [
             {
@@ -851,7 +854,7 @@
               data: [0.1, 0.4, (totalCO2/1000).toFixed(1)]
             },
             {
-              name: 'Others',
+              name: 'The rest of fossil CO2 emissions per person produce',
               type: 'bar',
               color: '#EEC582',
               stack: '总量',
@@ -976,6 +979,10 @@
         // ctx2.clearRect(0,0,c.width,c.height); //Clear Canvas
         c.width = c.width;
         c.height = c.height;
+        // ctx.fillStyle="rgba(255,255,255)";
+        // ctx.beginPath();
+        // ctx.fillRect(0,0,c.width,c.height);
+        // ctx.closePath();
 
         if (num >= 7)
         {
