@@ -1,0 +1,41 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-07 18:48:12
+ * @LastEditTime: 2020-05-07 23:27:25
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \DIP\Mask and Clip.html
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mask & Clip</title>
+</head>
+<body>
+  <svg width="300" height="250" viewBox="0 0 300 250">
+    <!-- xmlns="http://www.w3.org/2000/svg" -->
+      <path id="triangle" d="M50 0 L100 100 L0 100 Z" />
+      <rect id="rect" width="100" height="100" fill="red" />
+      <mask id="mask">
+        <use xlink:href="#triangle" fill="rgba(255,255,255,0.5)" />
+        <!-- 白色半透明的三角形蒙版 -->
+      </mask>
+    </defs>
+    <use xlink:href="#rect" x="10" y="10" mask="url(#mask)" />
+    <!-- 本来是红色方形，显示出来是粉色半透明的三角 -->
+  </svg>
+
+  <script>
+    // var cv = document.querySelector('#canvas');
+    // var img = document.querySelector('img');
+    // var w = cv.width = window.innerWidth, h = cv.height = window.innerHeight;
+    // var ctx = cv.getContext('2d');
+
+    // ctx.save();
+    // ctx.arc(60, 60, 50, 0, 2*Math.PI);
+    // ctx.clip();  // 切一个圆形画布出来
+    // ctx.drawImage(img, 0, 0, img.width, img.height);
+    // ctx.restore();
+  </script>
+</body>
+</html>

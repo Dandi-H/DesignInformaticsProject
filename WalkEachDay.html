@@ -57,6 +57,7 @@
           <p>
             <font>That would produce</font>
             <img id="kgCO2" alt="kgCO2" src="Images/100kgCO2.jpg" style="margin-left:0px; display: none">
+            <img id="ellipsis" alt="ellipsis" src="Images/Ellipsis.jpg" style="margin-left:0px; display: none">
             <p></p>
             <canvas id="myCO2Canvas" width="1400" height="120"></canvas>
             <p></p>
@@ -144,24 +145,53 @@
     function drawCO2Image(input_num)
     {
       calculateKg(input_num);
-      var num = Math.round(input_num.value*365/10000*8*2.7);
-      document.getElementById("input_num").onchange //=function()
+      var num = (input_num.value*365/10000*8*2.7).toFixed(2);
+      // document.getElementById("input_num").onchange //=function()
+
+      var c = document.getElementById("myCO2Canvas");
+      var ctx = c.getContext("2d");
+      // ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
+      c.width = c.width;
+      c.height = c.height;
+      var img = document.getElementById("kgCO2");
+
+      if (num<=1)
       {
-        var c = document.getElementById("myCO2Canvas");
-        var ctx = c.getContext("2d");
-        ctx.clearRect(0,0,c.width,c.height); //Clear Canvas
-        var img = document.getElementById("kgCO2");
+        ctx.drawImage(img, 0, 0);
+        // ctx.rect(img.width*num, 0, img.width*(1-num), img.height);
+        ctx.rect((img.width-16)*num+8, 0, (img.width-16)*(1-num), img.height);
+        ctx.fillStyle="rgba(255,255,255,0.6)";
+        ctx.fill();
+        // ctx.clearRect(img.width*num,0,img.width*(1-num),img.height);
+
+        // ctx.save();
+        // ctx.rect(0, 0, img.width*num, img.height);
+        // ctx.clip();  // 切画布
+        // ctx.restore();
+      }
+      else
+      {
         for (i=0; i<num; i++)
         {
           // console.log(i);
           if (i<10)
           {
             ctx.drawImage(img, img.width*i, 0);
+            if (i+1>num)
+            {
+              // ctx.rect(img.width*num, 0, img.width*(i+1-num), img.height);
+              ctx.rect(img.width*i+(img.width-16)*(num-i)+8, 0, img.width*(i+1-num), img.height);
+              ctx.fillStyle="rgba(255,255,255,0.6)";
+              ctx.fill();
+            }
           }
           else
           {
-            j=parseInt(i/10); //保留整数
-            ctx.drawImage(img, img.width*(i-10*j), img.height*j);
+            var imgEllipsis = document.getElementById("ellipsis");
+            ctx.drawImage(imgEllipsis, img.width*10, 0);
+            i = Math.round(num);
+            // j=parseInt(i/10); //保留整数
+            // ctx.drawImage(img, img.width*(i-10*j), img.height*j);
           }
         }
       }
